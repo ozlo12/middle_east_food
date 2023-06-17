@@ -1,57 +1,64 @@
 [
     {
+        "id":"kljd4",
         "name": "Vegan Burger",
         "description": "A delicious plant-based burger",
-        "category": "Vegan",
-        "image": "vegan_burger.jpg",
+        "categories": ["Vegan"],
+        "image":"/shawerma.jpg",
         "price": 8.99,
         "createdAt": "2023-06-16T00:00:00Z"
     },
     {
+        "id":"kljd5",
         "name": "Vegetarian Pizza",
         "description": "A mouthwatering pizza with a variety of vegetables",
-        "category": "Vegetarian",
-        "image": "vegetarian_pizza.jpg",
+        "categories": ["Vegetarian"],
+        "image":"/shawerma.jpg",
         "price": 12.99,
         "createdAt": "2023-06-15T12:00:00Z"
     },
     {
+        "id":"kljd6",
         "name": "Syrian Shawarma",
         "description": "A traditional Syrian dish with marinated meat and spices",
-        "category": "Syrian",
-        "image": "syrian_shawarma.jpg",
+        "categories": ["Syrian"],
+        "image":"/shawerma.jpg",
         "price": 10.99,
         "createdAt": "2023-06-14T18:00:00Z"
     },
     {
+        "id":"kljd7",
         "name": "Vegan Curry",
         "description": "A flavorful curry made with plant-based ingredients",
-        "category": "Vegan",
-        "image": "vegan_curry.jpg",
+        "categories": ["Vegan"],
+        "image":"/shawerma.jpg",
         "price": 9.99,
         "createdAt": "2023-06-13T09:00:00Z"
     },
     {
+        "id":"kljd8",
         "name": "Vegetarian Sushi",
         "description": "Delicate sushi rolls filled with fresh vegetables",
-        "category": "Vegetarian",
-        "image": "vegetarian_sushi.jpg",
+        "categories": ["Vegetarian"],
+        "image":"/shawerma.jpg",
         "price": 14.99,
         "createdAt": "2023-06-12T15:30:00Z"
     },
     {
+        "id":"kljd9",
         "name": "Syrian Falafel Wrap",
         "description": "A tasty wrap with crispy falafel and Middle Eastern flavors",
-        "category": "Syrian",
-        "image": "syrian_falafel_wrap.jpg",
+        "categories": ["Syrian"],
+        "image":"/shawerma.jpg",
         "price": 7.99,
         "createdAt": "2023-06-11T21:45:00Z"
     },
     {
+        "id":"kljd10",
         "name": "Vegan Pad Thai",
         "description": "Classic Thai noodles with tofu and vegetables",
-        "category": "Vegan",
-        "image": "vegan_pad_thai.jpg",
+        "categories": ["Vegan"],
+        "image":"/shawerma.jpg",
         "price": 11.99,
         "createdAt": "2023-06-10T11:30:00Z"
     }
