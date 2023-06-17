@@ -18,17 +18,17 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
+    // "emitDecoratorMetadata": true,
+    // "experimentalDecorators": true,
     "plugins": [
       {
         "name": "next"
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@components/*": [ "./src/components/*"],
+      "@icons/*":["./src/icons/*"],
+      "@models/*": [ "./src/models/*"]
     }
   },
   "include": [
