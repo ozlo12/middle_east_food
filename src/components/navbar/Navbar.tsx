@@ -7,12 +7,11 @@ export default function Navbar() {
   return (
     <nav className="navbar bg-transparent">
       <div className="container-fluid navbar-dark">
-        <Link passHref className="navbar-brand fw-bold fs-3" href="/">
+        <Link passHref className="navbar-brand ms-2" href="/">
           <Image
-            
             src="/serving-dish-2.png"
             width={40}
-            height={50}
+            height={40}
             alt="Middle Eastern Food"
           />
         </Link>
