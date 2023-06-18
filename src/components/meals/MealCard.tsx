@@ -27,6 +27,10 @@ export default function MealCard({ meal }: { meal: Meal }) {
           <li className="list-group-item">A second item</li>
           <li className="list-group-item">A third item</li>
         </ul> */}
+        <div className="d-flex gap-2 mb-2">
+          <span className="fw-bold">Price</span>
+          <span>£120</span>
+        </div>
         <div className="d-flex justify-content-between">
           <Link href={`/meals/${meal.id}`} className="btn btn-primary">
             View

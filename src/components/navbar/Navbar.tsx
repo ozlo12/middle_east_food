@@ -9,8 +9,8 @@ export default function Navbar() {
       <div className="container-fluid navbar-dark">
         <Link passHref className="navbar-brand fw-bold fs-3" href="/">
           <Image
-            style={{ filter: "invert(.7)" }}
-            src="/serving-dish.png"
+            
+            src="/serving-dish-2.png"
             width={40}
             height={50}
             alt="Middle Eastern Food"

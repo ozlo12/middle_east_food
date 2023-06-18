@@ -1,8 +1,8 @@
 import Link from "next/link";
-
+import classes from './auth.module.scss';
 export default function RegisterForm() {
   return (
-    <form style={{ maxWidth: "570px" }} className="mx-auto">
+    <form  className={`${classes.register_form}`}>
       <div className="border-1 rounded-4 bg-white p-4">
         <div className="form-floating mb-3">
           <input
@@ -58,7 +58,7 @@ export default function RegisterForm() {
         </div>
         <div className="d-flex justify-content-between">
           <Link href="/login">Have account already?</Link>
-          <div>
+          <div className="d-flex">
             <button className="btn btn-warning me-4">Rest</button>
             <button className="btn btn-primary">Regsiter</button>
           </div>

@@ -19,7 +19,7 @@ export default function LoginForm() {
   });
   return (
     <form className={classes.login_form}>
-      <div className="border-1 rounded-4 bg-primary-bg-subtle p-4">
+      <div className="border-1 rounded-4 bg-white p-4">
         <div className="form-floating mb-3">
           <input
             type="email"
