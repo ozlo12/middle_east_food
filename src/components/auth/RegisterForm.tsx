@@ -12,6 +12,10 @@ import {
   PhoneField,
 } from "@components/formik-field-generator";
 
+import { Container } from "../../container/Container";
+import { AuthEmailService } from "@services/auth-email.service";
+const authService = Container.resolve(AuthEmailService);
+
 export default function RegisterForm() {
   const formik = useFormik({
     initialValues: {
@@ -37,10 +41,17 @@ export default function RegisterForm() {
       address: Yup.string().required("Address is required"),
     }),
 
-    onSubmit() {},
+    async onSubmit({ email, password }) {
+      try {
+        const cred = await authService.singup(email, password);
+        console.log(cred.user);
+      } catch (err) {
+        if (err instanceof Error) console.log(err.message);
+      }
+    },
   });
   return (
-    <form className={`${classes.register_form}`}>
+    <form onSubmit={formik.handleSubmit} className={`${classes.register_form}`}>
       <div className="border-1 rounded-4 bg-white p-4">
         <NameField formik={formik} />
         <EmailField formik={formik} />

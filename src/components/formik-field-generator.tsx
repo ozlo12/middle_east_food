@@ -14,7 +14,7 @@ export const inputFieldTypeGenerator =
   (title: string) =>
   ({ formik }: { formik: ExtendableProps }) =>
     (
-      <div className="form-floating mb-3">
+      <div style={{ marginBottom: "2rem" }} className="form-floating">
         <input
           type={fieldType}
           name={fieldName}
@@ -32,7 +32,9 @@ export const inputFieldTypeGenerator =
           placeholder={title}
         />
         <label htmlFor={fieldName}>{title}</label>
-        <div className="invalid-feedback">{formik.errors[fieldName]}</div>
+        <div className="invalid-feedback position-absolute">
+          {formik.errors[fieldName]}
+        </div>
       </div>
     );
 
