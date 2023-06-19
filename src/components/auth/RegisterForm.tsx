@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import classes from "./auth.module.scss";
@@ -11,12 +12,17 @@ import {
   PasswordField,
   PhoneField,
 } from "@components/formik-field-generator";
-
-import { Container } from "../../container/Container";
-import { AuthEmailService } from "@services/auth-email.service";
-const authService = Container.resolve(AuthEmailService);
+import { useAuth } from "../../contexts/auth.context";
+import { useEffect } from "react";
 
 export default function RegisterForm() {
+  const { signup, authState } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (authState) router.replace("/");
+  }, [authState]);
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -43,8 +49,8 @@ export default function RegisterForm() {
 
     async onSubmit({ email, password }) {
       try {
-        const cred = await authService.singup(email, password);
-        console.log(cred.user);
+        const user = await signup(email, password);
+        router.replace("/");
       } catch (err) {
         if (err instanceof Error) console.log(err.message);
       }

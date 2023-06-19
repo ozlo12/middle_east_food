@@ -5,6 +5,7 @@ import { AuthProviderService } from "./auth-provider.service";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  User,
 } from "firebase/auth";
 import type { AuthProvider } from "./auth-provider.interface";
 
@@ -12,7 +13,7 @@ import type { AuthProvider } from "./auth-provider.interface";
 export class AuthEmailService implements AuthContract {
   constructor(@inject("AuthProvider") private authProvider: AuthProvider) {}
 
-  async singup(email: string, password: string): Promise<any> {
+  async signup(email: string, password: string): Promise<any> {
     return await createUserWithEmailAndPassword(
       this.authProvider.getAuth(),
       email,
@@ -30,5 +31,13 @@ export class AuthEmailService implements AuthContract {
   isAuthenticated() {
     const user = this.authProvider.getAuth().currentUser;
     return user;
+  }
+
+  regsterAuthObserver(fun: (user: User | null) => void) {
+    return this.authProvider.getAuth().onAuthStateChanged(fun);
+  }
+
+  signOut() {
+    return this.authProvider.getAuth().signOut();
   }
 }

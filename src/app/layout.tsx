@@ -2,6 +2,7 @@ import "./globals.scss";
 
 import classes from "./layout.module.scss";
 import Navbar from "../components/navbar/Navbar";
+import { AuthProvider } from "../contexts/auth.context";
 
 export const metadata = {
   title: "Next.js",
@@ -15,8 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={classes.body}>
-        <Navbar />
-        {children}
+        <AuthProvider>
+          <Navbar />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

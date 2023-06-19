@@ -4,12 +4,24 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import classes from "./auth.module.scss";
 import { EmailField, PasswordField } from "@components/formik-field-generator";
+import { useAuth } from "../../contexts/auth.context";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function LoginForm() {
+  const { login, authState } = useAuth();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (authState) router.replace("/");
+  }, [authState]);
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
+      status: "",
     },
     validationSchema: Yup.object().shape({
       email: Yup.string()
@@ -19,12 +31,22 @@ export default function LoginForm() {
         .required("Password is required")
         .min(6, "Password too short!"),
     }),
-    onSubmit({ email, password }) {
-      console.log(email, password);
+    async onSubmit({ email, password }) {
+      try {
+        const user = await login(email, password);
+        router.replace("/");
+      } catch (err) {
+        if (err instanceof Error) console.log(err.message);
+        formik.setErrors({ status: "Wrong email or password try again!" });
+      }
     },
   });
   return (
-    <form className={`${classes.login_form} needs-validation`} noValidate>
+    <form
+      onSubmit={formik.handleSubmit}
+      className={`${classes.login_form} needs-validation`}
+      noValidate
+    >
       <div className="border-1 rounded-4 bg-white p-4">
         <EmailField formik={formik} />
         <PasswordField formik={formik} />
@@ -35,6 +57,9 @@ export default function LoginForm() {
           <Link href="/register">Register new account?</Link>
         </div>
       </div>
+      {formik.errors.status && (
+        <p className="text-danger">{formik.errors.status}</p>
+      )}
     </form>
   );
 }
