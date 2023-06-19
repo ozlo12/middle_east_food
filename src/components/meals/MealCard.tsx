@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import CartIcon from "../../icons/Cart";
+import CartIcon from "@icons/Cart";
 import { Meal } from "@models/Meal";
 import classes from "./meals.module.scss";
+import { CartButton } from "@components/buttons/CartButton";
 
 export default function MealCard({ meal }: { meal: Meal }) {
   return (
@@ -21,21 +22,15 @@ export default function MealCard({ meal }: { meal: Meal }) {
       <div className="card-body d-flex flex-column justify-content-between">
         <h5 className="card-title">{meal.name}</h5>
         <p className="card-text">{meal.description}</p>
-        {/** Can be edited later */}
-        {/* <ul className="list-group list-group-flush">
-          <li className="list-group-item">An item</li>
-          <li className="list-group-item">A second item</li>
-          <li className="list-group-item">A third item</li>
-        </ul> */}
         <div className="d-flex gap-2 mb-2">
           <span className="fw-bold">Price</span>
-          <span>£120</span>
+          <span>£{meal.price}</span>
         </div>
         <div className="d-flex justify-content-between">
           <Link href={`/meals/${meal.id}`} className="btn btn-primary">
             View
           </Link>
-          <CartIcon />
+          <CartButton />
         </div>
       </div>
     </div>

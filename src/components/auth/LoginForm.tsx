@@ -1,49 +1,55 @@
 "use client";
 import Link from "next/link";
-import { useFormik, validateYupSchema } from "formik";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import classes from "./auth.module.scss";
+import { EmailField, PasswordField } from "@components/formik-field-generator";
+import { useAuth } from "../../contexts/auth.context";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function LoginForm() {
-  const {
-    values: { email, password },
-    handleChange,
-    errors,
-  } = useFormik({
+  const { login, authState } = useAuth();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (authState) router.replace("/");
+  }, [authState]);
+
+  const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
+      status: "",
     },
-    onSubmit({ email, password }) {
-      console.log(email, password);
+    validationSchema: Yup.object().shape({
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required!"),
+      password: Yup.string()
+        .required("Password is required")
+        .min(6, "Password too short!"),
+    }),
+    async onSubmit({ email, password }) {
+      try {
+        const user = await login(email, password);
+        router.replace("/");
+      } catch (err) {
+        if (err instanceof Error) console.log(err.message);
+        formik.setErrors({ status: "Wrong email or password try again!" });
+      }
     },
   });
   return (
-    <form className={classes.login_form}>
+    <form
+      onSubmit={formik.handleSubmit}
+      className={`${classes.login_form} needs-validation`}
+      noValidate
+    >
       <div className="border-1 rounded-4 bg-white p-4">
-        <div className="form-floating mb-3">
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={handleChange}
-            className="form-control"
-            id="floatingInput"
-            placeholder="name@example.com"
-          />
-          <label htmlFor="floatingEmail">Email address</label>
-        </div>
-        <div className="form-floating mb-3">
-          <input
-            name="password"
-            onChange={handleChange}
-            value={password}
-            type="password"
-            className="form-control"
-            id="floatingPassword"
-            placeholder="Password"
-          />
-          <label htmlFor="floatingPassword">Password</label>
-        </div>
+        <EmailField formik={formik} />
+        <PasswordField formik={formik} />
         <div className="d-flex flex-row-reverse justify-content-between">
           <button type="submit" className="btn btn-primary">
             login
@@ -51,6 +57,9 @@ export default function LoginForm() {
           <Link href="/register">Register new account?</Link>
         </div>
       </div>
+      {formik.errors.status && (
+        <p className="text-danger">{formik.errors.status}</p>
+      )}
     </form>
   );
 }
