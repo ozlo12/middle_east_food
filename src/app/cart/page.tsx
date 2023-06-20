@@ -1,8 +1,16 @@
+"use client";
+import ConfirmAddress from "@components/ConfirmAddress";
 import { CartItem, Cart } from "@models/cart";
 import { Meal } from "@models/Meal";
 import Image from "next/image";
+import { useRef, useState } from "react";
+import { ref } from "yup";
+import useClickout from "../../hooks/use-clickout";
 
 export default function CartPage() {
+  const confirmAddressRef = useRef(null);
+  // const [showConfirm, setShowConfirm] = useState(true);
+  const { showConfirm, setShowConfirm } = useClickout(confirmAddressRef);
   const cart = new Cart(
     [
       new CartItem(
@@ -35,6 +43,12 @@ export default function CartPage() {
 
   return (
     <div className="container">
+      <div ref={confirmAddressRef}>
+        <ConfirmAddress
+          show={showConfirm}
+          closeHandler={() => setShowConfirm(false)}
+        />
+      </div>
       <div className="table-responsive p-2 m-2 bg-primary-subtle rounded">
         <table className="table table-primary">
           <thead>
@@ -84,7 +98,10 @@ export default function CartPage() {
                 ${cart.totalPrice}
               </td>
               <td>
-                <button className="btn btn-primary float-end my-2">
+                <button
+                  onClick={() => setShowConfirm(true)}
+                  className="btn btn-primary float-end my-2"
+                >
                   Order
                 </button>
               </td>

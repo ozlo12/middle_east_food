@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { ReactNode } from "react";
 import shawarmaImage from "../../../public/shawarma.jpg";
 
 function LineRecord({ cartItem }: any) {
