@@ -10,7 +10,7 @@ import useClickout from "../../hooks/use-clickout";
 export default function CartPage() {
   const confirmAddressRef = useRef(null);
   // const [showConfirm, setShowConfirm] = useState(true);
-  const { showConfirm, setShowConfirm } = useClickout(confirmAddressRef);
+  const { show, setShow } = useClickout(confirmAddressRef);
   const cart = new Cart(
     [
       new CartItem(
@@ -44,10 +44,7 @@ export default function CartPage() {
   return (
     <div className="container">
       <div ref={confirmAddressRef}>
-        <ConfirmAddress
-          show={showConfirm}
-          closeHandler={() => setShowConfirm(false)}
-        />
+        <ConfirmAddress show={show} closeHandler={() => setShow(false)} />
       </div>
       <div className="table-responsive p-2 m-2 bg-primary-subtle rounded">
         <table className="table table-primary">
@@ -99,7 +96,7 @@ export default function CartPage() {
               </td>
               <td>
                 <button
-                  onClick={() => setShowConfirm(true)}
+                  onClick={() => setShow(true)}
                   className="btn btn-primary float-end my-2"
                 >
                   Order
