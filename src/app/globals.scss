@@ -1,2 +1,7 @@
 @import "../styles/custom_color";
+
 @import "bootstrap/scss/bootstrap.scss";
+.table-primary {
+  --bs-table-bg: var(--bs-primary-bg-subtle) !important;
+  --bs-table-border-color: var(--bs-secondary-bg-subtle) !important;
+}

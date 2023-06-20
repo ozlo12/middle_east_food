@@ -1,36 +1,64 @@
 "use client";
 
+import SearchIcon from "@icons/Search";
 import fuzzy from "fuzzy";
+import Link from "next/link";
+import { ChangeEvent, useEffect, useState } from "react";
+import useDebounced from "../../hooks/use-debounced";
 import classes from "./Search.module.scss";
 
 interface SearchProps {
-  products: { title: string }[];
+  products: { title: string; id: string }[];
 }
+
+const searchOptions = {
+  extract(el: { title: string; id: string }) {
+    return el.title.toLowerCase();
+  },
+};
 export default function Search({ products }: SearchProps) {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const [filteredProducts, setFilteredProducts] = useState<typeof products>([]);
+
+  const { debouned } = useDebounced(500);
+
+  const handleInput = (ev: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(ev.target.value);
+  };
+
+  useEffect(() => {
+    debouned(() => {
+      if (!searchTerm.trim()) return setFilteredProducts([]);
+      const results = fuzzy.filter(
+        searchTerm.toLowerCase(),
+        products,
+        searchOptions
+      );
+      const matches = results.map((e) => e.original);
+      setFilteredProducts([...matches].slice(0, 5));
+    });
+  }, [searchTerm, products]);
+
   return (
     <div className={classes.search}>
-      <div className={classes.search__wrapper}>
-        <div className={`input-group `}>
-          <span className="input-group-text">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-search"
-              viewBox="0 0 16 16"
-            >
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-            </svg>
-          </span>
-          <input className="form-control" placeholder="Search Product" />
-        </div>
-        <div className={classes.search__results}>
-          <p>Lorem ipsum dolor sit amet.</p>
-          <p>Lorem ipsum dolor sit amet.</p>
-          <p>Lorem ipsum dolor sit amet.</p>
-          <p>Lorem ipsum dolor sit amet.</p>
-        </div>
+      <div className={`input-group `}>
+        <span className="input-group-text">
+          <SearchIcon />
+        </span>
+        <input
+          onChange={handleInput}
+          value={searchTerm}
+          className="form-control"
+          placeholder="Search Product"
+        />
+      </div>
+      <div className={`list-group ${classes.search__box}`}>
+        {filteredProducts.map((e) => (
+          <Link className="list-group-item" href={"/meals/" + e.id}>
+            {e.title}
+          </Link>
+        ))}
       </div>
     </div>
   );

@@ -1,12 +1,12 @@
 import Link from "next/link";
 import classes from "./Header.module.scss";
 import Search from "../search/Search";
-
+import meals from "../../../data/meals.json";
 export default function Header() {
   return (
     <header>
       <h1 className={classes.title}>Middle Estern Food</h1>
-      <Search products={[]} />
+      <Search products={meals.map((m) => ({ title: m.name, id: m.id }))} />
     </header>
   );
 }

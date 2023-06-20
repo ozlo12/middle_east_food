@@ -42,18 +42,12 @@ export const emailNameGenerator = inputFieldTypeGenerator("email");
 export const passwordNameGenerator = inputFieldTypeGenerator("password");
 export const textNameGenerator = inputFieldTypeGenerator("text");
 
-export const emailTitleGenerator = emailNameGenerator("email");
-export const passwordTitleGenerator = passwordNameGenerator("password");
-export const confirmPasswordTitleGenerator =
-  passwordNameGenerator("confirmPassword");
-export const nameTitleGenerator = textNameGenerator("name");
-export const phoneTitleGenerator = textNameGenerator("phone");
-export const addressTitleGenerator = textNameGenerator("address");
-
-export const NameField = nameTitleGenerator("Name");
-export const EmailField = emailTitleGenerator("Email");
-export const PasswordField = passwordTitleGenerator("Password");
+export const NameField = textNameGenerator("name")("Name");
+export const EmailField = emailNameGenerator("email")("Email");
 export const ConfirmPasswordField =
-  confirmPasswordTitleGenerator("Confirm Password");
-export const PhoneField = phoneTitleGenerator("Phone");
-export const AddressField = addressTitleGenerator("Address");
+  passwordNameGenerator("confirmPassword")("Confirm Password");
+export const PasswordField = passwordNameGenerator("password")("Password");
+export const PhoneField = textNameGenerator("phone")("Phone");
+export const AddressField = textNameGenerator("address")("Address");
+export const PostcodeField = textNameGenerator("postcode")("Postcode");
+export const CityField = textNameGenerator("city")("City/Town");

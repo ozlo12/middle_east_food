@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "../../contexts/auth.context";
 import { dropdownButtonGenerator } from "@components/widgets/Dropdown";
+import AuthGuard from "@components/auth/AuthGuard";
 
 const AvatarDoopdown = dropdownButtonGenerator(({ onClick }) => (
   <button className="btn" onClick={onClick}>
@@ -30,7 +31,17 @@ export default function Navbar() {
             <CartIcon />
           </Link>
 
-          {authState ? (
+          <AuthGuard
+            fallback={
+              <Link
+                passHref
+                href="/login"
+                className="text-white fw-semibold btn"
+              >
+                Login
+              </Link>
+            }
+          >
             <AvatarDoopdown>
               <li className="">
                 <Link href="/profile" className="dropdown-item">
@@ -43,11 +54,7 @@ export default function Navbar() {
                 </button>
               </li>
             </AvatarDoopdown>
-          ) : (
-            <Link passHref href="/login" className="text-white fw-semibold btn">
-              Login
-            </Link>
-          )}
+          </AuthGuard>
         </div>
       </div>
     </nav>
