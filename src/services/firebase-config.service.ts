@@ -7,8 +7,8 @@ export class FirebaseAppService {
   private _app: FirebaseApp;
   constructor() {
     this.config = {
-      apiKey: "AIzaSyAVLSKI0vD7bKKsT7uaMoPpWVBppl-6RYM",
-      projectId: "test-project",
+      apiKey: "AIzaSyBNJW0-uA0CYBiDzoB3ZbmUt8YLuYPk6To",
+      projectId:"middle-eastern-food",
       // databaseURL: process.env.FIREBASE_DB_URL,
     };
     this._app = initializeApp(this.config);

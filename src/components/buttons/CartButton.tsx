@@ -4,7 +4,7 @@ import CartIcon from "@icons/Cart";
 export function CartButton() {
   return (
     <button className="btn">
-      <CartIcon color="secondary" />
+      <CartIcon color="dark" />
     </button>
   );
 }

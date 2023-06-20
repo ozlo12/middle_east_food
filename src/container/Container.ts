@@ -9,7 +9,7 @@ import {
 const customContainer = container.createChildContainer();
 
 customContainer.register("AuthProvider", {
-  useClass: LocalAuthProviderService,
+  useClass: AuthProviderService,
 });
 
 export { customContainer as Container };
