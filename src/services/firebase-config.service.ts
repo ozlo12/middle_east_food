@@ -7,9 +7,11 @@ export class FirebaseAppService {
   private _app: FirebaseApp;
   constructor() {
     this.config = {
-      apiKey: "AIzaSyBNJW0-uA0CYBiDzoB3ZbmUt8YLuYPk6To",
-      projectId:"middle-eastern-food",
+      // apiKey: "AIzaSyBNJW0-uA0CYBiDzoB3ZbmUt8YLuYPk6To",
+      // projectId:"middle-eastern-food",
       // databaseURL: process.env.FIREBASE_DB_URL,
+      apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
     };
     this._app = initializeApp(this.config);
   }
