@@ -20,16 +20,14 @@
     "incremental": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports":true,
     "plugins": [
       {
         "name": "next"
       }
     ],
     "paths": {
-      "@components/*": [ "./src/components/*"],
-      "@icons/*":["./src/icons/*"],
-      "@models/*": [ "./src/models/*"],
-      "@services/*":["./src/services/*"]
+      "@/*":["./src/*"]
     }
   },
   "include": [

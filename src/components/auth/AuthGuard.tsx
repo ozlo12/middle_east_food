@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
-import { useAuth } from "../../contexts/auth.context";
-import useMounted from "../../hooks/use-mounted";
+import { useAuth } from "@/contexts/auth-context";
+import useMounted from "@/hooks/use-mounted";
 
 interface AuthGuardProps {
   children: ReactNode;

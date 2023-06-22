@@ -1,5 +1,5 @@
 "use client";
-import CartIcon from "@icons/Cart";
+import CartIcon from "@/icons/Cart";
 
 export function CartButton() {
   return (

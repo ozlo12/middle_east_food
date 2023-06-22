@@ -24,6 +24,7 @@
     "react-dom": "18.2.0",
     "reflect-metadata": "^0.1.13",
     "sass": "^1.63.4",
+    "swr": "^2.1.5",
     "tsyringe": "^4.7.0",
     "typescript": "4.9.3",
     "yup": "^1.2.0"
