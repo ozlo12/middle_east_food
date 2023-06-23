@@ -3,14 +3,14 @@ import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import classes from "./auth.module.scss";
-import { EmailField, PasswordField } from "@components/formik-field-generator";
-import { useAuth } from "../../contexts/auth.context";
+import { EmailField, PasswordField } from "@/components/formik-field-generator";
+import { useAuth } from "@/contexts/auth-context";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import AuthGuard from "./AuthGuard";
 
 export default function LoginForm() {
-  const { login, authState } = useAuth();
+  const { emailPasswordAuth, authState } = useAuth();
 
   const router = useRouter();
 
@@ -34,7 +34,7 @@ export default function LoginForm() {
     }),
     async onSubmit({ email, password }) {
       try {
-        const user = await login(email, password);
+        const user = await emailPasswordAuth.signIn(email, password);
         router.replace("/");
       } catch (err) {
         if (err instanceof Error) console.log(err.message);

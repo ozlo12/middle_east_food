@@ -14,13 +14,13 @@ import {
   PhoneField,
   PostcodeField,
   textNameGenerator,
-} from "@components/formik-field-generator";
-import { useAuth } from "../../contexts/auth.context";
+} from "@/components/formik-field-generator";
+import { useAuth } from "@/contexts/auth-context";
 import { useEffect } from "react";
 import AuthGuard from "./AuthGuard";
 
 export default function RegisterForm() {
-  const { signup, authState } = useAuth();
+  const { emailPasswordAuth, authState } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export default function RegisterForm() {
 
     async onSubmit({ email, password }) {
       try {
-        const user = await signup(email, password);
+        const user = await emailPasswordAuth.signUp(email, password);
         router.replace("/");
       } catch (err) {
         if (err instanceof Error) console.log(err.message);

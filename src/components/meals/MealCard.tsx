@@ -1,10 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import CartIcon from "@icons/Cart";
-import { Meal } from "@models/Meal";
+import { Meal } from "@/models/Meal";
 import classes from "./meals.module.scss";
-import { CartButton } from "@components/buttons/CartButton";
+import { CartButton } from "@/components/buttons/CartButton";
 
 export default function MealCard({ meal }: { meal: Meal }) {
   return (

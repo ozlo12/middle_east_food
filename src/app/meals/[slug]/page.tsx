@@ -1,11 +1,16 @@
-import CheckIcon from "@icons/Check";
+import CheckIcon from "@/icons/Check";
 import Image from "next/image";
-import shawrmaImage from "../../../../public/shawerma.jpg";
+import shawrmaImage from "@/../public/shawerma.jpg";
 export default function Meal({ params }: { params: { slug: string } }) {
   return (
     <>
       <div className="card d-block d-md-none m-3 bg-secondary-subtle">
-        <Image src={shawrmaImage} className="card-img-top" height={400} alt="..." />
+        <Image
+          src={shawrmaImage}
+          className="card-img-top"
+          height={400}
+          alt="..."
+        />
         <div className="card-body bg-secondary-subtle">
           <h5 className="card-title">Card title</h5>
           <p className="card-text">

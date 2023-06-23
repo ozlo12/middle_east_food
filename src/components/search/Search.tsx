@@ -1,10 +1,10 @@
 "use client";
 
-import SearchIcon from "@icons/Search";
+import SearchIcon from "@/icons/Search";
 import fuzzy from "fuzzy";
 import Link from "next/link";
 import { ChangeEvent, useEffect, useState } from "react";
-import useDebounced from "../../hooks/use-debounced";
+import useDebounced from "@/hooks/use-debounced";
 import classes from "./Search.module.scss";
 
 interface SearchProps {

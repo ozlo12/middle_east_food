@@ -1,8 +1,8 @@
 import "./globals.scss";
 
 import classes from "./layout.module.scss";
-import Navbar from "../components/navbar/Navbar";
-import { AuthProvider } from "../contexts/auth.context";
+import Navbar from "@/components/navbar/Navbar";
+import { AuthProvider } from "@/contexts/auth-context";
 
 export const metadata = {
   title: "Next.js",

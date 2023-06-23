@@ -1,11 +1,11 @@
 "use client";
-import AvatarIcon from "../../icons/Avatar";
-import CartIcon from "../../icons/Cart";
+import AvatarIcon from "@/icons/Avatar";
+import CartIcon from "@/icons/Cart";
 import Image from "next/image";
 import Link from "next/link";
-import { useAuth } from "../../contexts/auth.context";
-import { dropdownButtonGenerator } from "@components/widgets/Dropdown";
-import AuthGuard from "@components/auth/AuthGuard";
+import { useAuth } from "@/contexts/auth-context";
+import { dropdownButtonGenerator } from "@/components/widgets/Dropdown";
+import AuthGuard from "@/components/auth/AuthGuard";
 
 const AvatarDoopdown = dropdownButtonGenerator(({ onClick }) => (
   <button className="btn" onClick={onClick}>
@@ -14,7 +14,11 @@ const AvatarDoopdown = dropdownButtonGenerator(({ onClick }) => (
 ));
 
 export default function Navbar() {
-  const { authState, signOut } = useAuth();
+  const { emailPasswordAuth, authState } = useAuth();
+
+  const signOut = () => {
+    emailPasswordAuth.signOut();
+  };
   return (
     <nav className="navbar bg-transparent">
       <div className="container-fluid navbar-dark">
@@ -49,7 +53,7 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className="">
-                <button onClick={() => signOut()} className="dropdown-item">
+                <button onClick={signOut} className="dropdown-item">
                   Logout
                 </button>
               </li>
