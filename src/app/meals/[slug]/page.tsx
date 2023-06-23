@@ -1,14 +1,23 @@
 import CheckIcon from "@/icons/Check";
+import { MealDoc } from "@/models/Meal";
 import Image from "next/image";
-import shawrmaImage from "@/../public/shawerma.jpg";
-export default function Meal({ params }: { params: { slug: string } }) {
+export default async function Meal({
+  params: { slug },
+}: {
+  params: { slug: string };
+}) {
+  const { meal }: { meal: MealDoc } = await fetch(
+    "http://localhost:3000/api/meals/" + slug
+  ).then((res) => res.json());
+  console.log(meal);
   return (
     <>
       <div className="card d-block d-md-none m-3 bg-secondary-subtle">
         <Image
-          src={shawrmaImage}
+          src={meal.image}
           className="card-img-top"
-          height={400}
+          height={300}
+          width={300}
           alt="..."
         />
         <div className="card-body bg-secondary-subtle">
@@ -32,7 +41,9 @@ export default function Meal({ params }: { params: { slug: string } }) {
       <div className="d-none d-md-flex container rounded">
         <Image
           className="img-fluid rounded-start-4 w-100"
-          src={shawrmaImage}
+          src={meal.image}
+          width={300}
+          height={300}
           alt={"meal"}
         />
         <div className="bg-secondary-subtle rounded-end-4 w-100 text-center">

@@ -15,24 +15,27 @@ export class MealRepo implements ModelContract<MealDoc> {
     return val;
   }
   async getAll(): Promise<MealDoc[]> {
-    const data = await this.db.getData("/meals");
-    const list: MealDoc[] = [];
-    data.forEach((d) => {
-      list.push(d as any);
-    });
-    console.log(list);
-    return list;
+    const snap = await this.db.getData("/meals");
+    if (snap.exists()) {
+      const val = snap.val();
+      return Object.keys(val).map((k) => ({ id: k, ...val[k] }));
+    }
+    return [];
   }
 
   watchAll() {
     throw new Error("Method not implemented.");
   }
 
-  findById(): Promise<MealDoc> {
-    throw new Error("Method not implemented.");
+  async findById(id: string): Promise<MealDoc> {
+    const snap = await this.db.getData("/meals/" + id);
+    if (snap.exists()) {
+      return { id: snap.key, ...snap.val() };
+    }
+    throw new Error("Data not found");
   }
 
-  watchById() {
+  watchById(id: string) {
     throw new Error("Method not implemented.");
   }
 

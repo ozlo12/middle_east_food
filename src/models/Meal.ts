@@ -27,12 +27,12 @@ export class Meal implements ModelContract<MealDoc> {
     return this.repo.getAll();
   }
 
-  findById(): Promise<MealDoc> {
-    throw new Error("Method not implemented.");
+  findById(id: string): Promise<MealDoc> {
+    return this.repo.findById(id);
   }
 
-  watchById() {
-    return this.repo.watchById();
+  watchById(id: string) {
+    return this.repo.watchById(id);
   }
 
   updateById(id: string, doc: Partial<MealDoc>): Promise<MealDoc> {

@@ -25,7 +25,7 @@ export abstract class FirebaseAuth {
     return onAuthStateChanged(this._auth, async (user) => {
       //Check if user admin to add claims if not exist.
       if (user) {
-        console.log(user.uid);
+        console.log(user);
         const res = await fetch("/api/auth/" + user?.uid);
         const resData = await res.json();
         console.log(resData);

@@ -4,7 +4,6 @@ import { CartItem, Cart } from "@/models/cart";
 import { Meal } from "@/models/Meal";
 import Image from "next/image";
 import { useRef, useState } from "react";
-import { ref } from "yup";
 import useClickout from "@/hooks/use-clickout";
 
 export default function CartPage() {

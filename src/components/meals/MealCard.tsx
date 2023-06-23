@@ -8,13 +8,13 @@ import { CartButton } from "@/components/buttons/CartButton";
 export default function MealCard({ meal }: { meal: MealDoc }) {
   return (
     <div
-      className={`card w-100 mx-auto  h-100 ${classes.meal_card}`}
+      className={`card w-100 mx-auto h-100  ${classes.meal_card}`}
       style={{ maxWidth: "18rem" }}
     >
       <Image
+        src={meal.image}
         width={250}
         height={250}
-        src={meal.image}
         className="card-img-top"
         alt="..."
       />
