@@ -1,5 +1,7 @@
-import { Container } from "./Container";
+import "reflect-metadata";
+import { AdminModule } from "@/modules/AdminModule";
+import { container } from "tsyringe";
 
-const ServerContainer = Container.createChildContainer();
+const ServerContainer = container.createChildContainer();
 
-export { ServerContainer };
+export const adminModule = ServerContainer.resolve(AdminModule);

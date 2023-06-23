@@ -1,9 +1,12 @@
-import { Container } from "./Container";
+import "reflect-metadata";
+import { container } from "tsyringe";
 import { FirebaseEmailPasswordAuth } from "@/services/firebase/auth/client/email-password-auth";
-const ClientContainer = Container.createChildContainer();
+import { AuthModule } from "@/modules/AuthModule";
+const ClientContainer = container.createChildContainer();
 
 ClientContainer.register("EmailPasswordAuthContract", {
   useClass: FirebaseEmailPasswordAuth,
 });
 
-export { ClientContainer };
+export const authModule = ClientContainer.resolve(AuthModule);
+// export { ClientContainer };

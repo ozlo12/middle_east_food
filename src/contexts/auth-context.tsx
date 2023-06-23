@@ -1,6 +1,7 @@
 "use client";
-import { ClientContainer } from "@/container/ClientContainer";
-import { AuthService } from "@/services/auth.service";
+import { authModule } from "@/container/ClientContainer";
+// import { ClientContainer } from "@/container/ClientContainer";
+// import { AuthService } from "@/services/auth.service";
 import {
   createContext,
   ReactNode,
@@ -9,10 +10,10 @@ import {
   useState,
 } from "react";
 
-const authService = ClientContainer.resolve(AuthService);
+// const authModule = ClientContainer.resolve(AuthService);
 
 const context = createContext({
-  emailPasswordAuth: authService.emailPasswordAuth,
+  emailPasswordAuth: authModule.emailPasswordAuth,
   authState: false,
 });
 
@@ -21,7 +22,7 @@ export const useAuth = () => useContext(context);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [authState, setAuthState] = useState(false);
   useEffect(() => {
-    const dispose = authService.emailPasswordAuth.authObserver((user) => {
+    const dispose = authModule.emailPasswordAuth.authObserver((user) => {
       setAuthState(user ? true : false);
     });
     return () => {
@@ -30,7 +31,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [null]);
   return (
     <context.Provider
-      value={{ emailPasswordAuth: authService.emailPasswordAuth, authState }}
+      value={{ emailPasswordAuth: authModule.emailPasswordAuth, authState }}
     >
       {children}
     </context.Provider>

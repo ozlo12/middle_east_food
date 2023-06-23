@@ -6,8 +6,9 @@ import { singleton } from "tsyringe";
 export class FirebaseAdminApp {
   private _app!: App;
   constructor() {
-    if (!getApps().length)
-      this._app = initializeApp(
+    this._app =
+      getApps()[0] ||
+      initializeApp(
         {
           credential: applicationDefault(),
           databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DB_URL,

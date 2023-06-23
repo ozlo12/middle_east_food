@@ -5,8 +5,8 @@ import { FirebaseAdminApp } from "./firebase-admin-app";
 @singleton()
 export class FirebaseAdminDB {
   private _db: Database;
-  constructor(firebaseApp: FirebaseAdminApp) {
-    this._db = getDatabase(firebaseApp.app);
+  constructor(private firebaseApp: FirebaseAdminApp) {
+    this._db = getDatabase(this.firebaseApp.app);
   }
 
   get db() {

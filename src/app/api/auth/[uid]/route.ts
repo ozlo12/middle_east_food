@@ -1,20 +1,16 @@
 import { NextResponse } from "next/server";
-import { ServerContainer } from "@/container/ServerContainer";
-import { FrebaseAdminAuthManager } from "@/services/firebase/auth/admin/admin-auth-manager";
-
-const adminManger = ServerContainer.resolve(FrebaseAdminAuthManager);
-
+import { adminModule } from "@/container/ServerContainer";
 export async function GET(
   req: Request,
   { params: { uid } }: { params: { uid: string } }
 ) {
+  const { authManager } = adminModule;
+
   try {
-    if (!uid) return NextResponse.json({ admin: false });
-    const isAdmin = await adminManger.isAdmin(uid);
-    return NextResponse.json({ admin: uid ? isAdmin : false });
+    await authManager.authAdmin(uid);
+    return NextResponse.json({}, { status: 200 });
   } catch (err) {
     console.log(err);
-    return NextResponse.json({ admin: false });
+    return NextResponse.json({}, { status: 400 });
   }
-  // return NextResponse.json({ admin: false });
 }

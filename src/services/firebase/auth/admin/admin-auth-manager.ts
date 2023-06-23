@@ -1,37 +1,40 @@
-import { Auth, getAuth } from "firebase-admin/auth";
 import { singleton } from "tsyringe";
+import { Auth, getAuth } from "firebase-admin/auth";
 import { FirebaseAdminApp } from "../../firebase-admin-app";
 import { FirebaseAdminDB } from "../../frebase-admin-db";
 
 @singleton()
-export class FrebaseAdminAuthManager {
+export class FirebaseAdminAuthManager {
   _auth: Auth;
   constructor(
     private adminApp: FirebaseAdminApp,
     private adminDb: FirebaseAdminDB
   ) {
-    this._auth = getAuth(adminApp.app);
+    this._auth = getAuth(this.adminApp.app);
   }
 
-  async isAdmin(uid: string): Promise<boolean> {
-    const user = await this._auth.getUser(uid);
-    if (user.customClaims?.["admin"]) {
-      // Already admmin and has claims.
-      console.log("user already admin");
-      return true;
-    }
-
+  private async _isAdmin(uid: string): Promise<boolean> {
     const adminRef = this.adminDb.db.ref("admins/" + uid);
-    const isAdmin = await new Promise<boolean>((res, rej) =>
-      adminRef.once("value", (sanpshot) => {
-        if (sanpshot.val()) {
-          console.log(user.email + " will be promoted to admiin");
-          console.log(sanpshot.val());
-          this._auth.setCustomUserClaims(uid, { admin: true });
-          return res(true);
-        } else return res(false);
+    return new Promise<boolean>((res, rej) =>
+      adminRef.once("value", (snapshot) => {
+        return res(!!snapshot.val());
       })
     );
-    return isAdmin;
+  }
+
+  async authAdmin(uid: string): Promise<void> {
+    const user = await this._auth.getUser(uid);
+    if (!user) return;
+
+    // Already admmin and has claims.
+    if (user.customClaims?.["admin"]) {
+      console.log("user already admin");
+      return;
+    }
+
+    if (await this._isAdmin(uid)) {
+      this._auth.setCustomUserClaims(uid, { admin: true });
+      console.log(user.email, " will permote to be admin!");
+    }
   }
 }
