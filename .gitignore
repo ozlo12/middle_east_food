@@ -32,4 +32,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-middle-eastern-food-firebase-adminsdk-7k2tq-06aee02c95.json
+firebase_secret.json
