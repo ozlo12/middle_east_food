@@ -1,8 +1,9 @@
-import Header from "../components/header/Header";
-import meals from "../../data/meals.json";
-import MealCard from "../components/meals/MealCard";
-export default function () {
-  const myMeals = meals;
+import Header from "@/components/header/Header";
+import MealCard from "@/components/meals/MealCard";
+import { mealModel } from "@/container/ClientContainer";
+
+export default async function HomePage() {
+  const meals = await mealModel.getAll();
   return (
     <div className="container">
       <Header />

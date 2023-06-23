@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { Meal } from "@/models/Meal";
+import { MealDoc } from "@/models/Meal";
 import classes from "./meals.module.scss";
 import { CartButton } from "@/components/buttons/CartButton";
 
-export default function MealCard({ meal }: { meal: Meal }) {
+export default function MealCard({ meal }: { meal: MealDoc }) {
   return (
     <div
       className={`card w-100 mx-auto  h-100 ${classes.meal_card}`}

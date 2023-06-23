@@ -12,4 +12,8 @@ export class FirebaseAdminDB {
   get db() {
     return this._db;
   }
+
+  getRef(ref: string) {
+    return this.db.ref(ref);
+  }
 }

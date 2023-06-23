@@ -1,4 +1,4 @@
-import type { EmailPasswordAuthContract } from "@/services/contracts/email-password-auth-contract";
+import type { EmailPasswordAuthContract } from "@/contracts/EmailPasswordAuthContract";
 import { FirebaseClientApp } from "@/services/firebase/firebase-client-app";
 
 import {

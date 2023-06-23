@@ -1,5 +1,5 @@
 import { inject, singleton } from "tsyringe";
-import type { EmailPasswordAuthContract } from "./contracts/email-password-auth-contract";
+import type { EmailPasswordAuthContract } from "../contracts/EmailPasswordAuthContract";
 @singleton()
 export class AuthService {
   constructor(

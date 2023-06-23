@@ -9,6 +9,7 @@ export class FirebaseClientApp {
     this.config = {
       apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
       projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+      databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DB_URL,
     };
     this._app = initializeApp(this.config, "client-app");
   }
