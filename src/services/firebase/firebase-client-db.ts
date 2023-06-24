@@ -1,6 +1,7 @@
 import { singleton } from "tsyringe";
 import { FirebaseClientApp } from "./firebase-client-app";
 import {
+  DataSnapshot,
   Database,
   get,
   getDatabase,
@@ -39,7 +40,7 @@ export class FirebaseClientDB {
     return remove(ref(this._db, path));
   }
 
-  watch(path: string, fn: <T>(snap: T) => void) {
+  watch(path: string, fn: (snap: DataSnapshot) => void) {
     return onValue(ref(this._db, path), fn);
   }
 

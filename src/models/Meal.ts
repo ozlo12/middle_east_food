@@ -2,12 +2,13 @@ import type { RepositoryContract } from "@/contracts/RepositoryContract";
 import { MealRepo } from "@/repositories/MealRepo";
 import { inject, singleton } from "tsyringe";
 import { ModelContract } from "../contracts/ModelContract";
+import { DataSnapshot } from "firebase/database";
 
 export interface MealDoc {
   id: string;
   name: string;
   description: string;
-  categories: string[];
+  categories: string;
   image: string;
   price: number;
   createdAt: string;
@@ -15,8 +16,8 @@ export interface MealDoc {
 @singleton()
 export class Meal implements ModelContract<MealDoc> {
   constructor(private repo: MealRepo) {}
-  watchAll() {
-    throw new Error("Method not implemented.");
+  watchAll(fn: (sanp: DataSnapshot) => void) {
+    return this.repo.watchAll(fn);
   }
 
   create(doc: MealDoc): Promise<MealDoc> {
@@ -31,8 +32,8 @@ export class Meal implements ModelContract<MealDoc> {
     return this.repo.findById(id);
   }
 
-  watchById(id: string) {
-    return this.repo.watchById(id);
+  watchById(id: string, fn: (snap: DataSnapshot) => void) {
+    return this.repo.watchById(id, fn);
   }
 
   updateById(id: string, doc: Partial<MealDoc>): Promise<MealDoc> {

@@ -1,14 +1,13 @@
 import Header from "@/components/header/Header";
 import MealCard from "@/components/meals/MealCard";
+import { mealModel } from "@/container/ClientContainer";
 import { MealDoc } from "@/models/Meal";
-
+export const revalidate = 60;
+async function getMeals(): Promise<MealDoc[]> {
+  return await mealModel.getAll();
+}
 export default async function HomePage() {
-  const { meals }: { meals: MealDoc[] } = await fetch(
-    "http://localhost:3000/api/meals",
-    {
-      next: { revalidate: 60 },
-    }
-  ).then((res) => res.json());
+  const meals = await getMeals();
 
   return (
     <div className="container">

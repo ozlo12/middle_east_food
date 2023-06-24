@@ -1,15 +1,19 @@
+import { mealModel } from "@/container/ClientContainer";
 import CheckIcon from "@/icons/Check";
 import { MealDoc } from "@/models/Meal";
 import Image from "next/image";
+
+function getMeal(id: string) {
+  return mealModel.findById(id);
+}
+
 export default async function Meal({
   params: { slug },
 }: {
   params: { slug: string };
 }) {
-  const { meal }: { meal: MealDoc } = await fetch(
-    "http://localhost:3000/api/meals/" + slug
-  ).then((res) => res.json());
-  console.log(meal);
+  const meal = await getMeal(slug);
+
   return (
     <>
       <div className="card d-block d-md-none m-3 bg-secondary-subtle">
