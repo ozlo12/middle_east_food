@@ -19,7 +19,7 @@ export default function MealEdit({ meal }: { meal?: MealDoc }) {
       name: meal?.name || "",
       price: meal?.price || 0,
       description: meal?.description || "",
-      categories: meal?.categories || "",
+      category: meal?.category || "",
       image: meal?.image || "",
     },
 

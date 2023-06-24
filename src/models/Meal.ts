@@ -8,7 +8,7 @@ export interface MealDoc {
   id: string;
   name: string;
   description: string;
-  categories: string;
+  category: string;
   image: string;
   price: number;
   createdAt: string;
