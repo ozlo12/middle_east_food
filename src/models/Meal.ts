@@ -20,7 +20,7 @@ export class Meal implements ModelContract<MealDoc> {
     return this.repo.watchAll(fn);
   }
 
-  create(doc: MealDoc): Promise<MealDoc> {
+  create(doc: Omit<MealDoc, "id">): Promise<MealDoc> {
     return this.repo.create(doc);
   }
 

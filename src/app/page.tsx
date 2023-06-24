@@ -10,12 +10,12 @@ export default async function HomePage() {
   const meals = await getMeals();
 
   return (
-    <div className="container">
+    <div className="container vh-100 overflow-scroll">
       <Header />
-      <div className="row align-items-start justify-content-between my-4 vh-100 overflow-scroll p-4 g-4">
+      <div className="row g-4 my-4">
         {meals.map((meal) => (
-          <div key={meal.id} className="col-12 col-md-6 col-lg-4">
-            <MealCard meal={{ ...meal }} />
+          <div key={meal.id} className="col-12 col-md-6 col-lg-4 h-100">
+            <MealCard meal={meal} />
           </div>
         ))}
       </div>

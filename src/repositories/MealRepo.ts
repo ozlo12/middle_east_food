@@ -14,12 +14,13 @@ export class MealRepo implements ModelContract<MealDoc> {
     return this.db.watch("meals", fn);
   }
 
-  async create(doc: MealDoc): Promise<MealDoc> {
+  async create(doc: Omit<MealDoc, "id">): Promise<MealDoc> {
     const key = (await this.db.pushData("/meals", doc)).key;
-    const data = await this.db.getData("meals/" + key);
-    const val = data.val();
-    console.log(val);
-    return val;
+    // const data = await this.db.getData("meals/" + key);
+    // const val = data.val();
+    // console.log(val);
+    // return val;
+    return this.findById(key!);
   }
   async getAll(): Promise<MealDoc[]> {
     const snap = await this.db.getData("/meals");
@@ -39,9 +40,10 @@ export class MealRepo implements ModelContract<MealDoc> {
   }
 
   updateById(id: string, doc: Partial<MealDoc>): Promise<MealDoc> {
-    throw new Error("Method not implemented.");
+    this.db.updateData("/meals/" + id, doc);
+    return this.findById(id);
   }
   deleteById(id: string): Promise<void> {
-    throw new Error("Method not implemented.");
+    return this.db.deleteData(id);
   }
 }

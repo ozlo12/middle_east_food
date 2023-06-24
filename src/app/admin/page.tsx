@@ -1,8 +1,12 @@
 import { mealModel } from "@/container/ClientContainer";
-import { MealDoc } from "@/models/Meal";
 import Link from "next/link";
 import { ReactNode } from "react";
 
+export const revalidate = 60;
+
+function getMeals() {
+  return mealModel.getAll();
+}
 function DashboardItem({
   children,
   route,
@@ -20,14 +24,8 @@ function DashboardItem({
     </div>
   );
 }
-// const dashboardFetcher = async <T = any,>(docName: string) => {
-//   return fetch(process.env.NEXT_PUBLIC_APP_URL + "/api/" + docName, {
-//     cache: "no-store",
-//   }).then((res) => res.json()) as Promise<T>;
-// };
 export default async function Dashboard() {
-  // const { meals } = await dashboardFetcher<{ meals: MealDoc[] }>("meals");
-  const meals = [];
+  const meals = await getMeals();
 
   return (
     <div className="vh-100 container">

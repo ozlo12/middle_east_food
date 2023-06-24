@@ -36,7 +36,7 @@ export class FirebaseClientDB {
     return push(ref(this._db, path), data);
   }
 
-  delteData(path: string) {
+  deleteData(path: string) {
     return remove(ref(this._db, path));
   }
 

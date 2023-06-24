@@ -6,13 +6,14 @@ import MealCard from "./MealCard";
 import { NameField, textNameGenerator } from "../formik-field-generator";
 import Link from "next/link";
 import { mealModel } from "@/container/ClientContainer";
-
+import { useRouter } from "next/navigation";
 const DescriptionField = textNameGenerator("description")("Description");
 const CategoriesField = textNameGenerator("categories")("Categories");
 const ImageField = textNameGenerator("image")("Image");
 const PriceField = textNameGenerator("price")("Price");
 
 export default function MealEdit({ meal }: { meal?: MealDoc }) {
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       name: meal?.name || "",
@@ -24,12 +25,14 @@ export default function MealEdit({ meal }: { meal?: MealDoc }) {
 
     // Save/Overwrite meal.
     async onSubmit(values) {
-      // fetch("/api/meals", {
-      //   method: "POST",
-      //   body: JSON.stringify(values),
-      // });
       try {
-        const res = await mealModel.create({ ...meal!, ...values });
+        if (meal) await mealModel.updateById(meal.id, { ...meal!, ...values });
+        else
+          await mealModel.create({
+            ...values,
+            createdAt: new Date().toISOString(),
+          });
+        router.back();
       } catch (err) {
         if (err instanceof Error) console.log(err.message);
         else console.log(err);

@@ -1,20 +1,16 @@
 import MealEdit from "@/components/meals/MealEdit";
-import { MealDoc } from "@/models/Meal";
+import { mealModel } from "@/container/ClientContainer";
 
-// const dashboardFetcher = async <T = any,>(docName: string) => {
-//   return fetch(process.env.NEXT_PUBLIC_APP_URL + "/api/" + docName, {
-//     cache: "no-store",
-//   }).then((res) => res.json()) as Promise<T>;
-// };
-
+function getMeal(id: string) {
+  return mealModel.findById(id);
+}
 export default async function MealItem({
   params: { id },
 }: {
   params: { id: string };
 }) {
-  // let meal: MealDoc | undefined;
-  // if (id !== "new") meal = (await dashboardFetcher("meals/" + id)).meal;
-  const meal = undefined;
+  const meal = id === "new" ? undefined : await getMeal(id);
+
   return (
     <div className="vh-100">
       <div className="container bg-white rounded p-4">

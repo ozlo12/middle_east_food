@@ -1,17 +1,15 @@
+import { mealModel } from "@/container/ClientContainer";
 import EditIcon from "@/icons/Edit";
 import { MealDoc } from "@/models/Meal";
 import Image from "next/image";
 import Link from "next/link";
 
-// const dashboardFetcher = async <T = any,>(docName: string) => {
-//   return fetch(process.env.NEXT_PUBLIC_APP_URL + "/api/" + docName, {
-//     cache: "no-store",
-//   }).then((res) => res.json()) as Promise<T>;
-// };
+function getMeals() {
+  return mealModel.getAll();
+}
 
 export default async function Meals() {
-  // const { meals } = await dashboardFetcher<{ meals: MealDoc[] }>("meals");
-  const meals: MealDoc[] = [];
+  const meals: MealDoc[] = await getMeals();
 
   return (
     <div className="vh-100">
