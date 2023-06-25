@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useAuth } from "@/contexts/auth-context";
 import { dropdownButtonGenerator } from "@/components/widgets/Dropdown";
 import AuthGuard from "@/components/auth/AuthGuard";
+import GridIcon from "@/icons/Grid";
 
 const AvatarDoopdown = dropdownButtonGenerator(({ onClick }) => (
   <button className="btn" onClick={onClick}>
@@ -22,14 +23,21 @@ export default function Navbar() {
   return (
     <nav className="navbar bg-transparent">
       <div className="container-fluid navbar-dark">
-        <Link passHref className="navbar-brand ms-2" href="/">
-          <Image
-            src="/serving-dish-2.png"
-            width={40}
-            height={40}
-            alt="Middle Eastern Food"
-          />
-        </Link>
+        <div className="hstack align-items-center">
+          <Link passHref className="navbar-brand ms-2" href="/">
+            <Image
+              src="/serving-dish-2.png"
+              width={40}
+              height={40}
+              alt="Middle Eastern Food"
+            />
+          </Link>
+          <AuthGuard isAdmin={true}>
+            <Link href="/admin">
+              <GridIcon className="text-white fw-bold" />
+            </Link>
+          </AuthGuard>
+        </div>
         <div className="d-flex gap-3">
           <Link passHref className="btn" href="/cart">
             <CartIcon />

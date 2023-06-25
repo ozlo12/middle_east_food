@@ -7,8 +7,9 @@ import { NameField, textNameGenerator } from "../formik-field-generator";
 import Link from "next/link";
 import { mealModel } from "@/container/ClientContainer";
 import { useRouter } from "next/navigation";
+
 const DescriptionField = textNameGenerator("description")("Description");
-const CategoriesField = textNameGenerator("categories")("Categories");
+const CategoriesField = textNameGenerator("category")("Category");
 const ImageField = textNameGenerator("image")("Image");
 const PriceField = textNameGenerator("price")("Price");
 

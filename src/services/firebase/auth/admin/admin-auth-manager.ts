@@ -22,19 +22,24 @@ export class FirebaseAdminAuthManager {
     );
   }
 
-  async authAdmin(uid: string): Promise<void> {
+  /**
+   * If admin function will return (true) else (false).
+   * @param uid
+   * @returns {boolean}
+   */
+  async authAdmin(uid: string): Promise<boolean> {
     const user = await this._auth.getUser(uid);
-    if (!user) return;
+
+    if (!user) return false;
 
     // Already admmin and has claims.
-    if (user.customClaims?.["admin"]) {
-      console.log("user already admin");
-      return;
-    }
+    if (user.customClaims?.["admin"]) return true;
 
     if (await this._isAdmin(uid)) {
       this._auth.setCustomUserClaims(uid, { admin: true });
-      console.log(user.email, " will permote to be admin!");
+      return true;
     }
+
+    return false;
   }
 }

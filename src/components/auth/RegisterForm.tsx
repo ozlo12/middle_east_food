@@ -24,7 +24,7 @@ export default function RegisterForm() {
   const router = useRouter();
 
   useEffect(() => {
-    if (authState) router.replace("/");
+    if (authState.isAuthenticated) router.replace("/");
   }, [authState]);
 
   const formik = useFormik({

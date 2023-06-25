@@ -7,10 +7,10 @@ export async function GET(
   const { authManager } = adminModule;
 
   try {
-    await authManager.authAdmin(uid);
-    return NextResponse.json({}, { status: 200 });
+    const result = await authManager.authAdmin(uid);
+    return NextResponse.json({ admin: result }, { status: 200 });
   } catch (err) {
     console.log(err);
-    return NextResponse.json({}, { status: 400 });
+    return NextResponse.json({}, { status: 401 });
   }
 }

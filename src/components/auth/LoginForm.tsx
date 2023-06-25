@@ -15,8 +15,8 @@ export default function LoginForm() {
   const router = useRouter();
 
   useEffect(() => {
-    if (authState) router.replace("/");
-  }, [authState]);
+    if (authState.isAuthenticated) router.replace("/");
+  }, [authState.isAuthenticated]);
 
   const formik = useFormik({
     initialValues: {

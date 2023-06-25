@@ -14,7 +14,10 @@ export default async function HomePage() {
       <Header />
       <div className="row g-4 my-4">
         {meals.map((meal) => (
-          <div key={meal.id} className="col-12 col-md-6 col-lg-4 h-100">
+          <div
+            key={meal.id}
+            className="col-12 col-md-6 col-lg-4 col-xl-3 h-100"
+          >
             <MealCard meal={meal} />
           </div>
         ))}

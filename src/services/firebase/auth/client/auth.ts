@@ -21,15 +21,19 @@ export abstract class FirebaseAuth {
     return signOut(this._auth);
   }
 
-  authObserver(fn: (user: User | null) => void): Unsubscribe {
+  authObserver(
+    fn: (user: (User & { isAdmin?: boolean }) | null) => void
+  ): Unsubscribe {
     return onAuthStateChanged(this._auth, async (user) => {
       //Check if user admin to add claims if not exist.
+      let alteredUser: (User & { isAdmin?: boolean }) | null = null;
       if (user) {
         const res = await fetch("/api/auth/" + user?.uid);
-        const resData = await res.json();
-        console.log(resData);
+        const resData: { admin: boolean } = await res.json();
+        alteredUser = user;
+        alteredUser.isAdmin = resData?.admin || false;
       }
-      fn(user);
+      fn(alteredUser);
     });
   }
 }
