@@ -24,7 +24,7 @@ export default function Modal(props: ModalProps) {
       tabIndex={-1}
       aria-hidden="true"
     >
-      <div className="modal-dialog">
+      <div ref={modalRef} className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
             <h1 className="modal-title fs-5">{title}</h1>

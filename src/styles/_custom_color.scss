@@ -6,7 +6,7 @@
 // Add a custom color to $theme-colors
 $custom-colors: (
   "primary": #a7640c,
-  "secondary": orangered,
+  "secondary": #706b64,
 );
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
@@ -19,15 +19,15 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 // Light mode
 $custom-colors-text: (
   "primary": #c56f29,
-  "secondary": rgb(214, 62, 2),
+  "secondary": #504237,
 );
 $custom-colors-bg-subtle: (
   "primary": #fee7d2,
-  "secondary": rgb(252, 207, 191),
+  "secondary": rgb(189, 184, 176),
 );
 $custom-colors-border-subtle: (
   "primary": #f3c097,
-  "secondary": rgb(250, 154, 118),
+  "secondary": #83756b,
 );
 
 $theme-colors-text: map-merge($theme-colors-text, $custom-colors-text);
