@@ -6,7 +6,24 @@ import { useRef, useState } from "react";
 import useClickout from "@/hooks/use-clickout";
 
 export default function CartPage() {
-  return <div></div>;
+  return (
+    <div className="row">
+      <div className="col-12 col-sm-6">
+        <table>
+          <thead>
+            <tr>
+              <th scope="column">#</th>
+              <th scope="column">item</th>
+              <th scope="column">quantity</th>
+              <th scope="column">price</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div className="col-12 col-sm-6"></div>
+    </div>
+  );
   // const confirmAddressRef = useRef(null);
   // // const [showConfirm, setShowConfirm] = useState(true);
   // const { show, setShow } = useClickout(confirmAddressRef);

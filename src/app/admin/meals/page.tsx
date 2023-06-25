@@ -30,7 +30,7 @@ export default async function Meals() {
           </thead>
           <tbody>
             {meals.map((m, i) => (
-              <tr className="p-4">
+              <tr key={i} className="p-4">
                 <th scope="row">{i + 1}</th>
                 <td>
                   <div className="d-flex gap-2 align-items-center">

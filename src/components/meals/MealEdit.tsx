@@ -7,6 +7,8 @@ import { NameField, textNameGenerator } from "../formik-field-generator";
 import Link from "next/link";
 import { mealModel } from "@/container/ClientContainer";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Modal from "../widgets/Modal";
 
 const DescriptionField = textNameGenerator("description")("Description");
 const CategoriesField = textNameGenerator("category")("Category");
@@ -14,7 +16,10 @@ const ImageField = textNameGenerator("image")("Image");
 const PriceField = textNameGenerator("price")("Price");
 
 export default function MealEdit({ meal }: { meal?: MealDoc }) {
+  const [showModal, setShowModal] = useState(false);
+
   const router = useRouter();
+
   const formik = useFormik({
     initialValues: {
       name: meal?.name || "",
@@ -40,32 +45,63 @@ export default function MealEdit({ meal }: { meal?: MealDoc }) {
       }
     },
   });
+
+  const onDelete = () => {
+    mealModel.deleteById(meal!.id);
+    router.back();
+  };
+
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div className="row g-4">
-        <div className="col-12 col-md-6">
-          <MealCard meal={{ ...meal!, ...formik.values }} />
+    <>
+      <form onSubmit={formik.handleSubmit}>
+        <div className="row g-4">
+          <div className="col-12 col-md-6">
+            <MealCard meal={{ ...meal!, ...formik.values }} />
+          </div>
+          <div className="col-12 col-md-6">
+            <NameField formik={formik} />
+            <ImageField formik={formik} />
+            <PriceField formik={formik} />
+            <DescriptionField formik={formik} />
+            <CategoriesField formik={formik} />
+          </div>
         </div>
-        <div className="col-12 col-md-6">
-          <NameField formik={formik} />
-          <ImageField formik={formik} />
-          <PriceField formik={formik} />
-          <DescriptionField formik={formik} />
-          <CategoriesField formik={formik} />
+        <div className="d-flex justify-content-between">
+          <div></div>
+          <div className="hstack gap-2 g-2">
+            {meal && (
+              <button
+                type="button"
+                onClick={() => {
+                  setShowModal(true);
+                }}
+                className="btn btn-danger"
+              >
+                Delete
+              </button>
+            )}
+            <Link href={"/admin/meals"} className="btn border-primary-subtle">
+              Cancel
+            </Link>
+            <button type="submit" className="btn btn-primary">
+              Save
+            </button>
+          </div>
         </div>
-      </div>
-      <div className="d-flex justify-content-between">
-        <div></div>
-        <div className="hstack gap-2 g-2">
-          {meal && <button className="btn btn-danger">Delete</button>}
-          <Link href={"/admin/meals"} className="btn border-primary-subtle">
-            Cancel
-          </Link>
-          <button type="submit" className="btn btn-primary">
-            Save
+      </form>
+
+      <Modal
+        title="Delete Meal"
+        action={
+          <button className="btn btn-danger" onClick={onDelete}>
+            Delete
           </button>
-        </div>
-      </div>
-    </form>
+        }
+        closeHandler={() => setShowModal(false)}
+        show={showModal}
+      >
+        <p>Are you sure, delete meal?</p>
+      </Modal>
+    </>
   );
 }
