@@ -1,14 +1,22 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
-import { FirebaseEmailPasswordAuth } from "@/services/firebase/auth/client/email-password-auth";
-import { AuthModule } from "@/modules/AuthModule";
 import { Meal } from "@/models/Meal";
+import { FirebaseEmailAuthProvider } from "@/services/firebase/auth/EmailAuthProvider";
+import { FirebaseAnonymousAuthProvider } from "@/services/firebase/auth/AnonymousAuthProvider";
+import { AuthService } from "@/new-services/auth/AuthService";
+import { FirebaseAuth } from "@/services/firebase/auth/Auth";
 const ClientContainer = container.createChildContainer();
-// Auth
-ClientContainer.register("EmailPasswordAuthContract", {
-  useClass: FirebaseEmailPasswordAuth,
+
+ClientContainer.register("EmailAuthProvider", {
+  useClass: FirebaseEmailAuthProvider,
 });
-export const authModule = ClientContainer.resolve(AuthModule);
+
+ClientContainer.register("AnonymousAuthProvider", {
+  useClass: FirebaseAnonymousAuthProvider,
+});
+
+export const authService = ClientContainer.resolve(AuthService);
+export const firebaseAuth = ClientContainer.resolve(FirebaseAuth);
 
 // Repos
 export const mealModel = ClientContainer.resolve(Meal);

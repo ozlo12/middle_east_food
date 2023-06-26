@@ -15,10 +15,10 @@ const AvatarDoopdown = dropdownButtonGenerator(({ onClick }) => (
 ));
 
 export default function Navbar() {
-  const { emailPasswordAuth, authState } = useAuth();
+  const { auth, user } = useAuth();
 
   const signOut = () => {
-    emailPasswordAuth.signOut();
+    auth.signOut();
   };
   return (
     <nav className="navbar bg-transparent">

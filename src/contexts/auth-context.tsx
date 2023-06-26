@@ -1,9 +1,7 @@
 "use client";
-import { authModule } from "@/container/ClientContainer";
-import { EmailPasswordAuthContract } from "@/contracts/EmailPasswordAuthContract";
+import { firebaseAuth } from "@/container/ClientContainer";
+import { FirebaseAuth } from "@/services/firebase/auth/Auth";
 import { User } from "firebase/auth";
-// import { ClientContainer } from "@/container/ClientContainer";
-// import { AuthService } from "@/services/auth.service";
 import {
   createContext,
   ReactNode,
@@ -12,51 +10,35 @@ import {
   useState,
 } from "react";
 
-// const authModule = ClientContainer.resolve(AuthService);
-
-interface AuthState {
-  user?: (User & { isAdmin?: boolean }) | null;
-  isAuthenticated: boolean;
-  isAdmin: boolean;
-}
 const context = createContext<{
-  emailPasswordAuth: EmailPasswordAuthContract;
-  authState: AuthState;
+  auth: FirebaseAuth;
+  user: null | (User & { isAdmin?: boolean });
 }>({
-  emailPasswordAuth: authModule.emailPasswordAuth,
-  authState: {
-    isAuthenticated: false,
-    isAdmin: false,
-    user: null,
-  },
+  // emailPasswordAuth: authModule.emailPasswordAuth,
+  auth: firebaseAuth,
+  user: null,
 });
 
 export const useAuth = () => useContext(context);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [authState, setAuthState] = useState<AuthState>({
-    user: null,
-    isAdmin: false,
-    isAuthenticated: false,
-  });
+  const [user, setUser] = useState<null | (User & { isAdmin?: boolean })>(null);
   useEffect(() => {
-    const dispose = authModule.emailPasswordAuth.authObserver(
-      (user: AuthState["user"]) => {
-        setAuthState({
-          isAuthenticated: !!user,
-          isAdmin: user?.isAdmin || false,
-          user,
-        });
+    return firebaseAuth.onAuthStateChanged(async (user) => {
+      console.log("on auth change");
+      const alteredUser: (User & { isAdmin?: boolean }) | null = user;
+
+      if (alteredUser) {
+        const { isAdmin } = await fetch("/api/auth/" + alteredUser.uid).then(
+          (res) => res.json()
+        );
+        alteredUser.isAdmin = isAdmin;
       }
-    );
-    return () => {
-      dispose();
-    };
+      setUser(alteredUser);
+    });
   }, [null]);
   return (
-    <context.Provider
-      value={{ emailPasswordAuth: authModule.emailPasswordAuth, authState }}
-    >
+    <context.Provider value={{ auth: firebaseAuth, user }}>
       {children}
     </context.Provider>
   );

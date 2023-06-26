@@ -7,16 +7,16 @@ import { EmailField, PasswordField } from "@/components/formik-field-generator";
 import { useAuth } from "@/contexts/auth-context";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import AuthGuard from "./AuthGuard";
+import { authService } from "@/container/ClientContainer";
 
 export default function LoginForm() {
-  const { emailPasswordAuth, authState } = useAuth();
+  const { auth, user } = useAuth();
 
   const router = useRouter();
 
   useEffect(() => {
-    if (authState.isAuthenticated) router.replace("/");
-  }, [authState.isAuthenticated]);
+    if (user?.providerData.length) router.replace("/");
+  }, [user]);
 
   const formik = useFormik({
     initialValues: {
@@ -34,7 +34,7 @@ export default function LoginForm() {
     }),
     async onSubmit({ email, password }) {
       try {
-        const user = await emailPasswordAuth.signIn(email, password);
+        const user = await authService.emailAuth.signIn(email, password);
         router.replace("/");
       } catch (err) {
         if (err instanceof Error) console.log(err.message);
@@ -43,30 +43,24 @@ export default function LoginForm() {
     },
   });
   return (
-    <AuthGuard
-      fallback={
-        <form
-          onSubmit={formik.handleSubmit}
-          className={`${classes.login_form} needs-validation`}
-          noValidate
-        >
-          <div className="border-1 rounded-4 bg-white p-4">
-            <EmailField formik={formik} />
-            <PasswordField formik={formik} />
-            <div className="d-flex flex-row-reverse justify-content-between">
-              <button type="submit" className="btn btn-primary">
-                login
-              </button>
-              <Link href="/register">Register new account?</Link>
-            </div>
-            {formik.errors.status && (
-              <p className="text-danger">{formik.errors.status}</p>
-            )}
-          </div>
-        </form>
-      }
+    <form
+      onSubmit={formik.handleSubmit}
+      className={`${classes.login_form} needs-validation`}
+      noValidate
     >
-      Looding ...
-    </AuthGuard>
+      <div className="border-1 rounded-4 bg-white p-4">
+        <EmailField formik={formik} />
+        <PasswordField formik={formik} />
+        <div className="d-flex flex-row-reverse justify-content-between">
+          <button type="submit" className="btn btn-primary">
+            login
+          </button>
+          <Link href="/register">Register new account?</Link>
+        </div>
+        {formik.errors.status && (
+          <p className="text-danger">{formik.errors.status}</p>
+        )}
+      </div>
+    </form>
   );
 }

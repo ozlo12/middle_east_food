@@ -12,10 +12,11 @@ export default function AuthGuard({
   fallback = null,
   isAdmin = false,
 }: AuthGuardProps) {
-  const { authState } = useAuth();
+  const { auth, user } = useAuth();
   const { mounted } = useMounted();
   if (!mounted) return null;
-  if (!authState.isAuthenticated || (isAdmin && !authState.isAdmin))
+
+  if (!user?.providerData.length || (isAdmin && !user.isAdmin))
     return <>{fallback}</>;
 
   return <>{children}</>;

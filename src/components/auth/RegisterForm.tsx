@@ -13,19 +13,19 @@ import {
   PasswordField,
   PhoneField,
   PostcodeField,
-  textNameGenerator,
 } from "@/components/formik-field-generator";
 import { useAuth } from "@/contexts/auth-context";
 import { useEffect } from "react";
-import AuthGuard from "./AuthGuard";
+import { authService } from "@/container/ClientContainer";
+import { EmailAuthProvider, linkWithCredential } from "firebase/auth";
 
 export default function RegisterForm() {
-  const { emailPasswordAuth, authState } = useAuth();
+  const { user, auth } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (authState.isAuthenticated) router.replace("/");
-  }, [authState]);
+    if (user?.providerData.length) router.replace("/");
+  }, [user]);
 
   const formik = useFormik({
     initialValues: {
@@ -57,7 +57,12 @@ export default function RegisterForm() {
 
     async onSubmit({ email, password }) {
       try {
-        const user = await emailPasswordAuth.signUp(email, password);
+        if (user)
+          await linkWithCredential(
+            user,
+            EmailAuthProvider.credential(email, password)
+          );
+        else authService.emailAuth.signUp(email, password);
         router.replace("/");
       } catch (err) {
         if (err instanceof Error) console.log(err.message);
@@ -65,37 +70,28 @@ export default function RegisterForm() {
     },
   });
   return (
-    <AuthGuard
-      fallback={
-        <form
-          onSubmit={formik.handleSubmit}
-          className={`${classes.register_form}`}
-        >
-          <div className="border-1 rounded-4 bg-white p-4">
-            <NameField formik={formik} />
-            <EmailField formik={formik} />
-            <PasswordField formik={formik} />
-            <ConfirmPasswordField formik={formik} />
-            <PhoneField formik={formik} />
-            <AddressField formik={formik} />
-            <div className="row ">
-              <div className="col-12 col-sm-6">
-                <PostcodeField formik={formik} />
-              </div>
-              <div className="col-12 col-sm-6">
-                <CityField formik={formik} />
-              </div>
-            </div>
-            <div className="d-flex justify-content-end ">
-              <button className="btn btn-warning me-4">Rest</button>
-              <button className="btn btn-primary">Regsiter</button>
-            </div>
-            <Link href="/login">Have account already?</Link>
+    <form onSubmit={formik.handleSubmit} className={`${classes.register_form}`}>
+      <div className="border-1 rounded-4 bg-white p-4">
+        <NameField formik={formik} />
+        <EmailField formik={formik} />
+        <PasswordField formik={formik} />
+        <ConfirmPasswordField formik={formik} />
+        <PhoneField formik={formik} />
+        <AddressField formik={formik} />
+        <div className="row ">
+          <div className="col-12 col-sm-6">
+            <PostcodeField formik={formik} />
           </div>
-        </form>
-      }
-    >
-      ...loading
-    </AuthGuard>
+          <div className="col-12 col-sm-6">
+            <CityField formik={formik} />
+          </div>
+        </div>
+        <div className="d-flex justify-content-end ">
+          <button className="btn btn-warning me-4">Rest</button>
+          <button className="btn btn-primary">Regsiter</button>
+        </div>
+        <Link href="/login">Have account already?</Link>
+      </div>
+    </form>
   );
 }

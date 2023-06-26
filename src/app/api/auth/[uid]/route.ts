@@ -1,14 +1,38 @@
 import { NextResponse } from "next/server";
-import { adminModule } from "@/container/ServerContainer";
+import { applicationDefault, getApps, initializeApp } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
+import { getDatabase } from "firebase-admin/database";
+
+async function isAdmin(uid: string) {
+  const app =
+    getApps()[0] ||
+    initializeApp({
+      credential: applicationDefault(),
+      databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DB_URL,
+    });
+
+  const auth = getAuth(app);
+  const user = await auth.getUser(uid);
+
+  if (!user) return false;
+
+  if (user.customClaims?.["admin"]) return true;
+
+  const db = getDatabase(app);
+  if ((await db.ref("/admin/" + uid).get()).exists()) {
+    user.customClaims!["admin"] = true;
+    return true;
+  }
+  return false;
+}
+
 export async function GET(
   req: Request,
   { params: { uid } }: { params: { uid: string } }
 ) {
-  const { authManager } = adminModule;
-
   try {
-    const result = await authManager.authAdmin(uid);
-    return NextResponse.json({ admin: result }, { status: 200 });
+    const result = await isAdmin(uid);
+    return NextResponse.json({ isAdmin: result }, { status: 200 });
   } catch (err) {
     console.log(err);
     return NextResponse.json({}, { status: 401 });
