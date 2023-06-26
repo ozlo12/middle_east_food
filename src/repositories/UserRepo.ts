@@ -1,12 +1,12 @@
-import { singleton } from "tsyringe";
 import { ModelContract } from "@/contracts/ModelContract";
-import { MealDoc } from "@/models/Meal";
+import { UserDoc } from "@/models/User";
 import { FirebaseClientDB } from "@/services/firebase/firebase-client-db";
+import { singleton } from "tsyringe";
 import { Repo } from "./Repo";
 
 @singleton()
-export class MealRepo extends Repo<MealDoc> implements ModelContract<MealDoc> {
-  doc = "/meals/";
+export class UserRepo extends Repo<UserDoc> implements ModelContract<UserDoc> {
+  doc = "/users/";
   constructor(protected db: FirebaseClientDB) {
     super();
   }
