@@ -44,7 +44,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     cartService.updateCart(updatedCart);
   };
 
-  const removeFromCart = (meal: MealDoc) => {};
+  const removeFromCart = (meal: MealDoc) => {
+    const updatedCart = new Cart(cart);
+    updatedCart.removeItem(meal);
+    cartService.updateCart(updatedCart);
+  };
 
   return (
     <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>

@@ -29,7 +29,7 @@ export class Cart {
     if (!actualItem) throw new Error("You try to remove item not exist at all");
 
     if (actualItem.quanitity > 1) --actualItem.quanitity;
-    else this.items.filter((i) => i !== actualItem);
+    else this.items = this.items.filter((i) => i !== actualItem);
 
     this.totalPrice -= item.price;
   }
