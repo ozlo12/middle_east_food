@@ -1,14 +1,9 @@
 "use client";
 
-import {
-  authService,
-  firebaseAuth,
-  userService,
-} from "@/container/ClientContainer";
+import ConfirmAddress from "@/components/ConfirmAddress";
 import { useCart } from "@/contexts/cart-context";
 import ChevronDownIcon from "@/icons/ChevronDown";
 import ChevronUpIcon from "@/icons/ChevronUp";
-import { Cart } from "@/models/User";
 import Image from "next/image";
 
 export default function CartPage() {
@@ -81,10 +76,17 @@ export default function CartPage() {
             </table>
           </div>
         </div>
-        <div className="col-12 col-lg-6 p-4 text-center">
-          <strong>Total: {cart?.totalPrice}</strong>
+        <div
+          style={{ minHeight: "300px" }}
+          className="col-12 col-lg-6 p-4 text-center"
+        >
+          <div className="d-flex flex-column justify-content-between h-100">
+            <strong>Total: {cart?.totalPrice}</strong>
+            <button className="btn btn-primary">Order</button>
+          </div>
         </div>
       </div>
+      {/* <ConfirmAddress /> */}
     </div>
   );
 }
