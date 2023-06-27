@@ -5,7 +5,7 @@ import { ModelContract } from "../contracts/ModelContract";
 import { DataSnapshot } from "firebase/database";
 
 export interface MealDoc {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   category: string;
@@ -20,7 +20,7 @@ export class Meal implements ModelContract<MealDoc> {
     return this.repo.watchAll(fn);
   }
 
-  create(doc: Omit<MealDoc, "id">): Promise<MealDoc> {
+  create(doc: MealDoc): Promise<MealDoc> {
     return this.repo.create(doc);
   }
 

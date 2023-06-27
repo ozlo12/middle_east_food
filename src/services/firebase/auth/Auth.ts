@@ -20,8 +20,26 @@ export class FirebaseAuth {
     return this.auth.currentUser;
   }
 
-  onAuthStateChanged(fn: (user: User | null) => void): () => void {
-    return onAuthStateChanged(this.auth, fn);
+  get isAuthenticated(): Promise<User | null> {
+    return new Promise((res, rej) => {
+      const dispose = onAuthStateChanged(
+        this.auth,
+        (user) => {
+          dispose();
+          return res(user);
+        },
+        (err) => {
+          return rej(err);
+        }
+      );
+    });
+  }
+
+  onAuthStateChanged(
+    fn: (user: User | null) => void,
+    errFn?: (err: Error) => void
+  ): () => void {
+    return onAuthStateChanged(this.auth, fn, errFn);
   }
 
   signOut() {

@@ -1,5 +1,5 @@
 "use client";
-import { firebaseAuth } from "@/container/ClientContainer";
+import { authService, firebaseAuth } from "@/container/ClientContainer";
 import { FirebaseAuth } from "@/services/firebase/auth/Auth";
 import { User } from "firebase/auth";
 import {
@@ -9,6 +9,8 @@ import {
   useEffect,
   useState,
 } from "react";
+
+import useSWR from "swr";
 
 const context = createContext<{
   auth: FirebaseAuth;

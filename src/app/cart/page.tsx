@@ -1,11 +1,16 @@
 "use client";
-import ConfirmAddress from "@/components/ConfirmAddress";
-// import { CartItem, Cart } from "@/models/cart";
-import Image from "next/image";
-import { useRef, useState } from "react";
-import useClickout from "@/hooks/use-clickout";
+
+import {
+  authService,
+  firebaseAuth,
+  userService,
+} from "@/container/ClientContainer";
+import { useCart } from "@/contexts/cart-context";
+import { Cart } from "@/models/User";
 
 export default function CartPage() {
+  const { cart, addToCart, removeFromCart } = useCart();
+
   return (
     <div className="row">
       <div className="col-12 col-sm-6">

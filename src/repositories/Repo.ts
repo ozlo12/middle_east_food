@@ -12,7 +12,7 @@ export abstract class Repo<T> {
     return this.db.watch(this.doc, fn);
   }
 
-  async create(doc: Omit<T, "id">): Promise<T> {
+  async create(doc: T): Promise<T> {
     const key = (await this.db.pushData(this.doc, doc)).key;
     return this.findById(key!);
   }

@@ -3,7 +3,11 @@
 import { MealDoc } from "@/models/Meal";
 import { useFormik } from "formik";
 import MealCard from "./MealCard";
-import { NameField, textNameGenerator } from "../formik-field-generator";
+import {
+  inputFieldTypeGenerator,
+  NameField,
+  textNameGenerator,
+} from "../formik-field-generator";
 import Link from "next/link";
 import { mealModel } from "@/container/ClientContainer";
 import { useRouter } from "next/navigation";
@@ -13,7 +17,7 @@ import Modal from "../widgets/Modal";
 const DescriptionField = textNameGenerator("description")("Description");
 const CategoriesField = textNameGenerator("category")("Category");
 const ImageField = textNameGenerator("image")("Image");
-const PriceField = textNameGenerator("price")("Price");
+const PriceField = inputFieldTypeGenerator("number")("price")("Price");
 
 export default function MealEdit({ meal }: { meal?: MealDoc }) {
   const [showModal, setShowModal] = useState(false);
@@ -31,8 +35,9 @@ export default function MealEdit({ meal }: { meal?: MealDoc }) {
 
     // Save/Overwrite meal.
     async onSubmit(values) {
+      console.log(values);
       try {
-        if (meal) await mealModel.updateById(meal.id, { ...meal!, ...values });
+        if (meal) await mealModel.updateById(meal.id!, values);
         else
           await mealModel.create({
             ...values,
@@ -47,8 +52,10 @@ export default function MealEdit({ meal }: { meal?: MealDoc }) {
   });
 
   const onDelete = () => {
-    mealModel.deleteById(meal!.id);
-    router.back();
+    if (meal && meal.id) {
+      mealModel.deleteById(meal.id);
+      router.back();
+    }
   };
 
   return (

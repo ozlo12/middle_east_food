@@ -1,7 +1,7 @@
 import { DataSnapshot } from "firebase/database";
 
 export interface ModelContract<T> {
-  create(doc: Omit<T, "id">): Promise<T>;
+  create(doc: T): Promise<T>;
   getAll(): Promise<T[]>;
   watchAll(fn: (snap: DataSnapshot) => void): () => void;
   findById(id: string): Promise<T>;
