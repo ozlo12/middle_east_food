@@ -1,6 +1,7 @@
 "use client";
 
-import ConfirmAddress from "@/components/ConfirmAddress";
+import ConfirmOrder from "@/components/ConfirmOrder";
+import ConfirmAddress from "@/components/ConfirmOrder";
 import { useCart } from "@/contexts/cart-context";
 import ChevronDownIcon from "@/icons/ChevronDown";
 import ChevronUpIcon from "@/icons/ChevronUp";
@@ -82,7 +83,7 @@ export default function CartPage() {
         >
           <div className="d-flex flex-column justify-content-between h-100">
             <strong>Total: {cart?.totalPrice}</strong>
-            <button className="btn btn-primary">Order</button>
+            <ConfirmOrder />
           </div>
         </div>
       </div>

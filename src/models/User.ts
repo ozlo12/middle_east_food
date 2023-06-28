@@ -35,7 +35,7 @@ export class Cart {
   }
 }
 
-export interface ContactInfo {
+export interface Contact {
   name: string;
   email: string;
   phone: string;
@@ -46,7 +46,7 @@ export interface ContactInfo {
 
 export interface UserDoc {
   id?: string;
-  contactInfo?: ContactInfo;
+  contact?: Contact;
   cart?: Cart;
   orders: Cart[];
 }

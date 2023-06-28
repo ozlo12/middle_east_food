@@ -1,4 +1,4 @@
-import { Cart, ContactInfo, User, UserDoc } from "@/models/User";
+import { Cart, Contact, User, UserDoc } from "@/models/User";
 import { singleton } from "tsyringe";
 import { CartService } from "./CartService";
 
@@ -24,7 +24,7 @@ export class UserService {
     });
   }
 
-  updateContact(uid: string, contactInfo: ContactInfo) {
-    return this.userModel.updateById(uid, { contactInfo });
+  updateContact(uid: string, contact: Contact) {
+    return this.userModel.updateById(uid, { contact });
   }
 }

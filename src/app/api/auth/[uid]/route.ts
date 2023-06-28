@@ -16,13 +16,19 @@ async function isAdmin(uid: string) {
 
   if (!user) return false;
 
-  if (user.customClaims?.["admin"]) return true;
+  if(user.customClaims?.["admin"])return true;
 
   const db = getDatabase(app);
-  if ((await db.ref("/admin/" + uid).get()).exists()) {
-    user.customClaims!["admin"] = true;
+  
+  const adminRef = db.ref('/admins/'+uid);
+
+  const isAdmin = (await adminRef.get()).exists()
+
+  if (isAdmin) {
+    auth.setCustomUserClaims(uid,{admin:true})
     return true;
   }
+
   return false;
 }
 
@@ -34,7 +40,7 @@ export async function GET(
     const result = await isAdmin(uid);
     return NextResponse.json({ isAdmin: result }, { status: 200 });
   } catch (err) {
-    console.log(err);
+    console.log(err instanceof Error?err.message:err);
     return NextResponse.json({}, { status: 401 });
   }
 }
