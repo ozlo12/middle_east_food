@@ -82,8 +82,8 @@ export default function CartPage() {
           className="col-12 col-lg-6 p-4 text-center"
         >
           <div className="d-flex flex-column justify-content-between h-100">
-            <strong>Total: {cart?.totalPrice}</strong>
-            <ConfirmOrder />
+            <strong>Total: {cart?.totalPrice.toFixed(2)}</strong>
+            {(cart?.items.length && <ConfirmOrder />) || null}
           </div>
         </div>
       </div>
