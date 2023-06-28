@@ -7,6 +7,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { dropdownButtonGenerator } from "@/components/widgets/Dropdown";
 import AuthGuard from "@/components/auth/AuthGuard";
 import GridIcon from "@/icons/Grid";
+import { useCart } from "@/contexts/cart-context";
 
 const AvatarDoopdown = dropdownButtonGenerator(({ onClick }) => (
   <button className="btn" onClick={onClick}>
@@ -16,7 +17,7 @@ const AvatarDoopdown = dropdownButtonGenerator(({ onClick }) => (
 
 export default function Navbar() {
   const { auth, user } = useAuth();
-
+  const { cart } = useCart();
   const signOut = () => {
     auth.signOut();
   };
@@ -40,7 +41,12 @@ export default function Navbar() {
         </div>
         <div className="d-flex gap-3">
           <Link passHref className="btn" href="/cart">
-            <CartIcon />
+            <div className="position-relative">
+              <span className="position-absolute badge bg-primary start-100 top-0 rounded-pill translate-middle-y">
+                {cart?.items.reduce((acc, cur) => acc + cur.quanitity, 0) || 0}
+              </span>
+              <CartIcon />
+            </div>
           </Link>
 
           <AuthGuard

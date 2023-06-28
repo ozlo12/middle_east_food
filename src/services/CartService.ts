@@ -4,6 +4,7 @@ import { singleton } from "tsyringe";
 import { AuthService } from "./auth/AuthService";
 import { FirebaseAuth } from "./firebase/auth/Auth";
 import { FirebaseClientDB } from "./firebase/firebase-client-db";
+import { Unsubscribe } from "firebase/database";
 
 @singleton()
 export class CartService {
@@ -39,11 +40,20 @@ export class CartService {
   }
 
   async watchCart(fn: (cart: Cart) => void): Promise<() => void> {
-    const url = await this.getUrl();
-    return this.db.watch(url, async (snap) => {
-      if (snap.exists()) fn(new Cart(snap.val()));
-      else fn(await this.createCart());
+    // Case no user yet and no items
+    let authWatcher: () => void;
+    let cartWatcher: Unsubscribe;
+
+    authWatcher = this.auth.onAuthStateChanged((user) => {
+      if (!user) return fn(new Cart());
+      cartWatcher = this.db.watch(`/users/${user.uid}/cart`, (snap) => {
+        fn(new Cart(snap.val()));
+      });
     });
+    return () => {
+      if (cartWatcher) cartWatcher();
+      if (authWatcher) authWatcher();
+    };
   }
 
   async updateCart(cart: Cart) {

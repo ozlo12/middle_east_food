@@ -21,17 +21,23 @@ export class Cart {
     if (actualItem) ++actualItem.quanitity;
     else this.items.push({ item, quanitity: 1 });
 
-    this.totalPrice += item.price;
+    this.totalPrice = this.calculateTotalPrice();
   }
 
+  calculateTotalPrice() {
+    return this.items.reduce(
+      (acc, cur) => acc + cur.quanitity * cur.item.price,
+      0
+    );
+  }
   removeItem(item: MealDoc) {
-    const actualItem = this.items.find(({ item }) => item.id === item.id);
+    const actualItem = this.items.find((i) => i.item.id === item.id);
     if (!actualItem) throw new Error("You try to remove item not exist at all");
 
     if (actualItem.quanitity > 1) --actualItem.quanitity;
     else this.items = this.items.filter((i) => i !== actualItem);
 
-    this.totalPrice -= item.price;
+    this.totalPrice = this.calculateTotalPrice();
   }
 }
 
