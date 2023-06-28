@@ -13,11 +13,16 @@ import {
 } from "./formik-field-generator";
 import Modal from "./widgets/Modal";
 import { Contact } from "@/models/User";
-import { contactService } from "@/container/ClientContainer";
+import { contactService, orderService } from "@/container/ClientContainer";
+import { useCart } from "@/contexts/cart-context";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function ConfirmOrder() {
   const [initialContact, setInitialContact] = useState<Contact | null>(null);
+  const { cart } = useCart();
+
   const [show, setShow] = useState(false);
+
   useEffect(() => {
     contactService.getContact().then((contact) => {
       setInitialContact(contact);
@@ -25,7 +30,8 @@ export default function ConfirmOrder() {
   }, [null]);
 
   const createOrder = (contact: Contact) => {
-    console.log("Order created to contact: ", contact);
+    if (!cart) return;
+    orderService.createOrder(contact, cart);
   };
 
   const isSameContact = (contact: Contact) => {

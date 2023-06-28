@@ -8,6 +8,7 @@ import { FirebaseAuth } from "@/services/firebase/auth/Auth";
 import { UserService } from "@/services/UserService";
 import { CartService } from "@/services/CartService";
 import { ContactService } from "@/services/ContactService";
+import { OrderService } from "@/services/OrderService";
 const ClientContainer = container.createChildContainer();
 
 ClientContainer.register("EmailAuthProvider", {
@@ -28,3 +29,4 @@ export const mealModel = ClientContainer.resolve(Meal);
 export const userService = ClientContainer.resolve(UserService);
 export const cartService = ClientContainer.resolve(CartService);
 export const contactService = ClientContainer.resolve(ContactService);
+export const orderService = ClientContainer.resolve(OrderService);
