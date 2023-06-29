@@ -11,7 +11,7 @@ export default function CartPage() {
 
   return (
     <div className="bg-white mx-auto p-2 rounded container">
-      <div className="row">
+      <div className="row align-items-center">
         <div className="col-12 col-lg-6">
           <div
             style={{ maxHeight: "400px" }}
@@ -78,7 +78,7 @@ export default function CartPage() {
         </div>
         <div
           style={{ minHeight: "300px" }}
-          className="col-12 col-lg-6 p-4 text-center"
+          className="col-12 col-lg-6 p-4 text-center align-self-stretch"
         >
           <div className="d-flex flex-column justify-content-between h-100">
             <strong>Total: {cart?.totalPrice.toFixed(2)}</strong>

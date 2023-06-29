@@ -14,11 +14,13 @@ import { useAuth } from "./auth-context";
 
 const CartContext = createContext<{
   cart?: Cart;
-  removeFromCart: (meal: MealDoc) => void;
-  addToCart: (meal: MealDoc) => void;
+  removeFromCart: (meal: MealDoc) => Promise<void>;
+  addToCart: (meal: MealDoc) => Promise<void>;
+  resetCart: () => Promise<void>;
 }>({
-  removeFromCart: (meal: MealDoc) => {},
-  addToCart: (meal: MealDoc) => {},
+  removeFromCart: async (meal: MealDoc) => {},
+  addToCart: async (meal: MealDoc) => {},
+  resetCart: async () => {},
 });
 
 export const useCart = () => useContext(CartContext);
@@ -38,20 +40,26 @@ export function CartProvider({ children }: { children: ReactNode }) {
     };
   }, [auth.user]);
 
+  const resetCart = () => {
+    return cartService.updateCart(new Cart());
+  };
+
   const addToCart = (meal: MealDoc) => {
     const updatedCart = new Cart(cart);
     updatedCart.addItem(meal);
-    cartService.updateCart(updatedCart);
+    return cartService.updateCart(updatedCart);
   };
 
   const removeFromCart = (meal: MealDoc) => {
     const updatedCart = new Cart(cart);
     updatedCart.removeItem(meal);
-    cartService.updateCart(updatedCart);
+    return cartService.updateCart(updatedCart);
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, resetCart }}
+    >
       {children}
     </CartContext.Provider>
   );

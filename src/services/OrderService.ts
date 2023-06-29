@@ -6,24 +6,17 @@ import { FirebaseAuth } from "./firebase/auth/Auth";
 @singleton()
 export class OrderService {
   constructor(private db: FirebaseClientDB, private auth: FirebaseAuth) {}
-  private getUserOrderUrl(uid: string) {
-    return `/users/${uid}/orders/`;
-  }
-
-  private getNewOrdersUrl() {
-    return "/orders/new/";
-  }
-
-  private getAllOrdersUrl() {
-    return "/orders/";
-  }
 
   async createOrder(contact: Contact, cart: Cart) {
     if (!this.auth.user) throw new Error("No signed in user to take an order");
+    console.log(contact);
     const { uid } = this.auth.user;
-    const newOrdersUrl = this.getNewOrdersUrl();
-    const userOrderUrl = this.getUserOrderUrl(uid);
-    await this.db.setData(userOrderUrl, cart);
-    return this.db.pushData(newOrdersUrl, { ...cart, contact });
+    // Add order to user
+    await this.db.pushData(`users/${uid}/orders`, cart);
+    // Add order to Order list
+    return this.db.pushData("/orders/active", {
+      order: cart,
+      createdBy: { uid, contact },
+    });
   }
 }

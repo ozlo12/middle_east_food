@@ -4,6 +4,7 @@ import classes from "./layout.module.scss";
 import Navbar from "@/components/navbar/Navbar";
 import { AuthProvider } from "@/contexts/auth-context";
 import { CartProvider } from "@/contexts/cart-context";
+import { ToastProvider } from "@/contexts/useToast";
 
 export const metadata = {
   title: "Next.js",
@@ -20,7 +21,7 @@ export default function RootLayout({
         <AuthProvider>
           <CartProvider>
             <Navbar />
-            {children}
+            <ToastProvider>{children}</ToastProvider>
           </CartProvider>
         </AuthProvider>
       </body>
