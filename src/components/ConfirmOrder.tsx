@@ -18,55 +18,48 @@ import { useCart } from "@/contexts/cart-context";
 import { useAuth } from "@/contexts/auth-context";
 
 export default function ConfirmOrder() {
-  const [initialContact, setInitialContact] = useState<Contact | null>(null);
   const { cart } = useCart();
 
   const [show, setShow] = useState(false);
 
-  useEffect(() => {
-    contactService.getContact().then((contact) => {
-      setInitialContact(contact);
-    });
-  }, [null]);
-
-  const createOrder = (contact: Contact) => {
-    if (!cart) return;
-    orderService.createOrder(contact, cart);
+  const setContact = (contact: Contact) => {
+    return contactService.setContact(contact);
   };
 
-  const isSameContact = (contact: Contact) => {
-    if (!initialContact) return false;
-
-    for (const key in contact)
-      if (
-        contact[key as keyof Contact] !== initialContact[key as keyof Contact]
-      )
-        return false;
-
-    return true;
+  const createOrder = (contact: Contact) => {
+    console.log("Order processing to contact: ", contact);
+    return Promise.resolve();
   };
 
   const formik = useFormik({
     initialValues: {
-      name: initialContact?.name || "",
-      email: initialContact?.email || "",
-      phone: initialContact?.phone || "",
-      address: initialContact?.address || "",
-      postcode: initialContact?.postcode || "",
-      city: initialContact?.city || "",
+      name: "",
+      email: "",
+      phone: "",
+      address: "",
+      postcode: "",
+      city: "",
     },
 
     async onSubmit(values: Contact) {
-      if (!initialContact) await contactService.createContact(values);
-      else if (!isSameContact(values))
-        await contactService.updateContact(values);
-
-      createOrder(values);
+      try {
+        await setContact(values);
+        await createOrder(values);
+      } catch (err) {
+        // Handle error
+      }
     },
   });
 
-  const submitForm = () => {
-    formik.submitForm();
+  useEffect(() => {
+    contactService.getContact().then((contact: Contact | null) => {
+      if (contact) formik.setValues(contact);
+    });
+  }, [null]);
+
+  const submitForm = async () => {
+    await formik.submitForm();
+    setShow(false);
   };
   return (
     <>

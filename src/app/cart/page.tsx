@@ -1,7 +1,6 @@
 "use client";
 
 import ConfirmOrder from "@/components/ConfirmOrder";
-import ConfirmAddress from "@/components/ConfirmOrder";
 import { useCart } from "@/contexts/cart-context";
 import ChevronDownIcon from "@/icons/ChevronDown";
 import ChevronUpIcon from "@/icons/ChevronUp";
@@ -87,7 +86,6 @@ export default function CartPage() {
           </div>
         </div>
       </div>
-      {/* <ConfirmAddress /> */}
     </div>
   );
 }
