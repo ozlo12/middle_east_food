@@ -11,7 +11,7 @@ export default async function HomePage() {
 
   return (
     <div className="container vh-100 overflow-scroll">
-      <Header />
+      <Header meals={meals} />
       <div className="row g-4 my-4">
         {meals.map((meal) => (
           <div
