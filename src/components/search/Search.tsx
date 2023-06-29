@@ -55,7 +55,7 @@ export default function Search({ products }: SearchProps) {
       </div>
       <div className={`list-group ${classes.search__box}`}>
         {filteredProducts.map((e) => (
-          <Link className="list-group-item" href={"/meals/" + e.id}>
+          <Link key={e.id} className="list-group-item" href={"/meals/" + e.id}>
             {e.title}
           </Link>
         ))}

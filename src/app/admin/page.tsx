@@ -40,10 +40,6 @@ export default async function Dashboard() {
           <h5>Total orders: 230</h5>
           <h6>Active orders: 2</h6>
         </DashboardItem>
-        <DashboardItem route="/admin/users">
-          <h3>Users</h3>
-          <h5>Total users: 30</h5>
-        </DashboardItem>
       </div>
     </div>
   );
