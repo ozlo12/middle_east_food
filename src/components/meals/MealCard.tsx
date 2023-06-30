@@ -36,11 +36,14 @@ export default function MealCard({ meal }: { meal: MealDoc }) {
           <Link href={`/meals/${meal.id}`} className="btn btn-primary">
             View
           </Link>
-          <CartButton
+          <button onClick={() => addToCart(meal)} className="btn btn-primary">
+            Add to Cart
+          </button>
+          {/* <CartButton
             onClick={() => {
               addToCart(meal);
             }}
-          />
+          /> */}
         </div>
       </div>
     </div>
