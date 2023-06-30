@@ -1,4 +1,5 @@
 import MealsReport from "@/components/meals/MealsReport";
+import OrdersReport from "@/components/orders/OrdersReport";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -31,9 +32,7 @@ export default async function Dashboard() {
           <MealsReport />
         </DashboardItem>
         <DashboardItem route="/admin/orders">
-          <h3>Orders</h3>
-          <h5>Total orders: 230</h5>
-          <h6>Active orders: 2</h6>
+          <OrdersReport />
         </DashboardItem>
       </div>
     </div>
