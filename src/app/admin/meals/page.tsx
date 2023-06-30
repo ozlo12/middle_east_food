@@ -1,19 +1,18 @@
+import MealsBoard from "@/components/meals/MealsBoard";
 import { mealModel } from "@/container/ClientContainer";
-import EditIcon from "@/icons/Edit";
+// import EditIcon from "@/icons/Edit";
 import { MealDoc } from "@/models/Meal";
-import Image from "next/image";
-import Link from "next/link";
+// import Image from "next/image";
+// import Link from "next/link";
 
-function getMeals() {
-  return mealModel.getAll();
-}
+// function getMeals() {
+//   return mealModel.getAll();
+// }
 
 export default async function Meals() {
-  const meals: MealDoc[] = await getMeals();
-
   return (
     <div className="vh-100">
-      <div className="container my-4 rounded p-5 bg-primary-subtle mh-100 overflow-auto position-relative">
+      {/* <div className="container my-4 rounded p-5 bg-primary-subtle mh-100 overflow-auto position-relative">
         <div className="position-absolute top-0 end-0 p-2">
           <Link href="/admin/meals/new" className="btn btn-primary">
             New
@@ -48,7 +47,8 @@ export default async function Meals() {
             ))}
           </tbody>
         </table>
-      </div>
+      </div> */}
+      <MealsBoard />
     </div>
   );
 }

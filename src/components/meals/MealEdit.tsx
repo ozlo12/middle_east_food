@@ -35,7 +35,6 @@ export default function MealEdit({ meal }: { meal?: MealDoc }) {
 
     // Save/Overwrite meal.
     async onSubmit(values) {
-      console.log(values);
       try {
         if (meal) await mealModel.updateById(meal.id!, values);
         else

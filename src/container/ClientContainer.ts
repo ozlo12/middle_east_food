@@ -9,6 +9,7 @@ import { UserService } from "@/services/UserService";
 import { CartService } from "@/services/CartService";
 import { ContactService } from "@/services/ContactService";
 import { OrderService } from "@/services/OrderService";
+import { MealService } from "@/services/MealService";
 const ClientContainer = container.createChildContainer();
 
 ClientContainer.register("EmailAuthProvider", {
@@ -30,3 +31,4 @@ export const userService = ClientContainer.resolve(UserService);
 export const cartService = ClientContainer.resolve(CartService);
 export const contactService = ClientContainer.resolve(ContactService);
 export const orderService = ClientContainer.resolve(OrderService);
+export const mealService = ClientContainer.resolve(MealService);
