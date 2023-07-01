@@ -50,6 +50,9 @@ export async function GET(
     return NextResponse.json({ isAdmin: result }, { status: 200 });
   } catch (err) {
     console.log(err instanceof Error ? err.message : err);
-    return NextResponse.json({}, { status: 401 });
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : err },
+      { status: 401 }
+    );
   }
 }
