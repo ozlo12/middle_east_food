@@ -31,7 +31,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const dispose = cartService.watchCart((cart) => {
-      console.log("cart updated");
       setCart(cart);
     });
 

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { applicationDefault, getApps, initializeApp } from "firebase-admin/app";
+import { getApps, initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 import { getDatabase } from "firebase-admin/database";
 import { credential } from "firebase-admin";

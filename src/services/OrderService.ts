@@ -23,9 +23,12 @@ export class OrderService {
       createdAt: new Date().toISOString(),
     });
 
-    await fetch("/api/send-mail", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/email`, {
       method: "POST",
-      body: JSON.stringify(contact),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ contact }),
     });
 
     return order;

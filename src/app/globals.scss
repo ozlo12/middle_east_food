@@ -5,3 +5,23 @@
   --bs-table-bg: var(--bs-primary-bg-subtle) !important;
   --bs-table-border-color: var(--bs-secondary-bg-subtle) !important;
 }
+/* Width and height of the scrollbar */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+// /* Background color of the scrollbar track */
+// ::-webkit-scrollbar-track {
+//   background-color: var(--bs-primary-bg-subtle);
+// }
+
+// /* Color of the scrollbar handle */
+// ::-webkit-scrollbar-thumb {
+//   background-color:var(--bs-primary-bg-subtle)
+// }
+
+// /* Hover color of the scrollbar handle */
+// ::-webkit-scrollbar-thumb:hover {
+//   background-color: var(--bs-primary);
+// }

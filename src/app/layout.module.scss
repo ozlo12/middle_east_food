@@ -3,4 +3,10 @@
     background-image:linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,0.3)), url('/background.jpg');
     background-position: center;
     background-size: cover;
+    scrollbar-width: none;
+    scrollbar-color: rgb(222, 176, 40);
+    ::-webkit-scrollbar{
+        width: 0px;
+        height:0px;
+    }
 }

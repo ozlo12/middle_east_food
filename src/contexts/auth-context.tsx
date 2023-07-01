@@ -10,8 +10,6 @@ import {
   useState,
 } from "react";
 
-import useSWR from "swr";
-
 const context = createContext<{
   auth: FirebaseAuth;
   user: null | (User & { isAdmin?: boolean });
@@ -27,13 +25,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<null | (User & { isAdmin?: boolean })>(null);
   useEffect(() => {
     return firebaseAuth.onAuthStateChanged(async (user) => {
-      console.log("on auth change");
       const alteredUser: (User & { isAdmin?: boolean }) | null = user;
 
       if (alteredUser) {
-        const { isAdmin } = await fetch("/api/auth/" + alteredUser.uid).then(
-          (res) => res.json()
-        );
+        const { isAdmin } = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/${alteredUser.uid}`
+        ).then((res) => res.json());
         alteredUser.isAdmin = isAdmin;
       }
       setUser(alteredUser);
