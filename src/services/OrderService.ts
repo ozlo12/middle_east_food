@@ -23,7 +23,7 @@ export class OrderService {
       createdAt: new Date().toISOString(),
     });
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/email`, {
+    const res = await fetch(`${process.env.VERCEL_URL}/api/email`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

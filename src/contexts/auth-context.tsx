@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (alteredUser) {
         const { isAdmin } = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/${alteredUser.uid}`
+          `${process.env.VERCEL_URL}/api/auth/${alteredUser.uid}`
         ).then((res) => res.json());
         alteredUser.isAdmin = isAdmin;
       }
