@@ -30,6 +30,7 @@ export class OrderService {
       },
       body: JSON.stringify({ contact }),
     });
+    console.log(await res.json());
 
     return order;
   }
