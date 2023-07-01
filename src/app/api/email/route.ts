@@ -15,8 +15,8 @@ async function sendEamil(contact: Contact) {
     } as TransportOptions)
     .sendMail({
       subject: "Test Mail",
-      // to: "anasalzaiad@gmail.com",
-      to: "mirooguitar44@gmail.com",
+      to: "anasalzaiad@gmail.com",
+      // to: "mirooguitar44@gmail.com",
       from: "zayd@middleeasternfood.co.uk",
       html: `
       <h1>Order Recived</h1> 
