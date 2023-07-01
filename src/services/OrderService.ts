@@ -15,13 +15,20 @@ export class OrderService {
     // Add order to user
     await this.db.pushData(`users/${uid}/orders`, cart);
     // Add order to Order list
-    return this.db.pushData("/orders/", {
+    const order = await this.db.pushData("/orders/", {
       order: cart,
       createdBy: uid,
       contact,
       status: "new",
       createdAt: new Date().toISOString(),
     });
+
+    await fetch("/api/send-mail", {
+      method: "POST",
+      body: JSON.stringify(contact),
+    });
+
+    return order;
   }
 
   async getOrder(id: string): Promise<OrderContract> {
