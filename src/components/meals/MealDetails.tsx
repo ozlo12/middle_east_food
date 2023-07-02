@@ -38,7 +38,7 @@ export default function MealDetails({ id }: { id: string }) {
           <span>{data?.category}</span>
         </div>
         <div className="text-center fw-semibold fs-5">
-          {data?.price.toFixed(2)}
+          £{data?.price.toFixed(2)}
         </div>
         <div className="card-body bg-white text-center">
           <button onClick={() => addToCart(data!)} className="btn btn-primary">
@@ -67,7 +67,7 @@ export default function MealDetails({ id }: { id: string }) {
           </div>
           <h3 className="text-secondary-emphasis">Description</h3>
           <p>{data?.description}</p>
-          <p className="fs-2 ">{data?.price.toFixed(2)}</p>
+          <p className="fs-2 ">£{data?.price.toFixed(2)}</p>
           <button
             onClick={() => {
               addToCart(data!);
