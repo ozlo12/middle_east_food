@@ -92,6 +92,10 @@ export default function ConfirmOrder() {
           <CityField formik={formik} />
           <PhoneField formik={formik} />
         </form>
+        <div className="fw-semibold">
+          We Accept <i>Cash</i> and <i>Card</i> on Delivery
+          <div className="text-center fw-lighter">Delivery Available</div>
+        </div>
       </Modal>
       <button onClick={() => setShow(true)} className="btn btn-primary">
         Order
