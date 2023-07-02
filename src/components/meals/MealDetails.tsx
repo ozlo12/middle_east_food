@@ -25,8 +25,12 @@ export default function MealDetails({ id }: { id: string }) {
             alt={data.name}
           />
         )}
+
         <div className="card-body bg-white">
           <h5 className="card-title">{data?.name}</h5>
+          <div className="bg-primary text-white fw-semibold p-1">
+            Description
+          </div>
           <p className="card-text">{data?.description}</p>
         </div>
         <div className="bg-white ps-3 hstack">
