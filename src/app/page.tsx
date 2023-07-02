@@ -3,6 +3,8 @@ import MealCard from "@/components/meals/MealCard";
 import { mealModel } from "@/container/ClientContainer";
 import { MealDoc } from "@/models/Meal";
 import classes from "./layout.module.scss";
+import Image from "next/image";
+import EnvelopeIcon from "@/icons/Envelope";
 export const revalidate = 60;
 async function getMeals(): Promise<MealDoc[]> {
   return await mealModel.getAll();
@@ -22,6 +24,15 @@ export default async function HomePage() {
             <MealCard meal={meal} />
           </div>
         ))}
+      </div>
+      <div className="m-2 hstack gap-2 justify-content-center align-items-center">
+        <EnvelopeIcon className="text-white" />
+        <a
+          className="link text-white  fw-semibold"
+          href="mailto:zayd@middleeasternfood.co.uk"
+        >
+          zayd@midddleeasternfood.co.uk
+        </a>
       </div>
     </div>
   );
