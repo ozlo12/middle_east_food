@@ -94,7 +94,9 @@ export default function ConfirmOrder() {
         </form>
         <div className="fw-semibold">
           We Accept <i>Cash</i> and <i>Card</i> on Delivery
-          <div className="text-center fw-lighter">Delivery Available</div>
+          <div className="text-center fw-lighter">
+            Delivery Available and Pickup
+          </div>
         </div>
       </Modal>
       <button onClick={() => setShow(true)} className="btn btn-primary">

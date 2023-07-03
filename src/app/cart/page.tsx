@@ -45,7 +45,7 @@ export default function CartPage() {
                       </div>
                     </td>
                     <td align="center" valign="middle">
-                      {item.price}
+                      £{item.price}
                     </td>
                     <td align="center" valign="middle">
                       {quanitity}
@@ -81,7 +81,7 @@ export default function CartPage() {
           className="col-12 col-lg-6 p-4 text-center align-self-stretch"
         >
           <div className="d-flex flex-column justify-content-between h-100">
-            <strong>Total: {cart?.totalPrice.toFixed(2)}</strong>
+            <strong>Total: £{cart?.totalPrice.toFixed(2)}</strong>
             {(cart?.items.length && <ConfirmOrder />) || null}
           </div>
         </div>

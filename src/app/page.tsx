@@ -3,9 +3,10 @@ import MealCard from "@/components/meals/MealCard";
 import { mealModel } from "@/container/ClientContainer";
 import { MealDoc } from "@/models/Meal";
 import classes from "./layout.module.scss";
-import Image from "next/image";
 import EnvelopeIcon from "@/icons/Envelope";
+
 export const revalidate = 60;
+
 async function getMeals(): Promise<MealDoc[]> {
   return await mealModel.getAll();
 }
