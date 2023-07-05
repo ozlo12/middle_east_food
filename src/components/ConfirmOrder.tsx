@@ -15,7 +15,6 @@ import Modal from "./widgets/Modal";
 import { Contact } from "@/models/User";
 import { contactService, orderService } from "@/container/ClientContainer";
 import { useCart } from "@/contexts/cart-context";
-import Toast from "./widgets/Toast";
 import CheckIcon from "@/icons/Check";
 import { useToast } from "@/contexts/useToast";
 
@@ -23,6 +22,7 @@ export default function ConfirmOrder() {
   const { cart, resetCart } = useCart();
   const { setContext } = useToast();
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const setContact = (contact: Contact) => {
     return contactService.setContact(contact);
@@ -46,9 +46,11 @@ export default function ConfirmOrder() {
 
     async onSubmit(values: Contact) {
       try {
+        setLoading(true);
         await setContact(values);
         await createOrder(values);
         await resetCart();
+        setLoading(false);
         setContext(
           <div className="hstack bg-success-subtle p-2 rounded fw-semibold fs-4">
             <CheckIcon className="text-success" />
@@ -69,6 +71,7 @@ export default function ConfirmOrder() {
   }, [null]);
 
   const submitForm = async () => {
+    console.log("button pressed");
     await formik.submitForm();
     setShow(false);
   };
@@ -79,7 +82,14 @@ export default function ConfirmOrder() {
         closeHandler={() => setShow(false)}
         show={show}
         action={
-          <button onClick={submitForm} className="btn btn-primary">
+          <button
+            disabled={loading}
+            onClick={submitForm}
+            className="btn btn-primary"
+          >
+            {loading && (
+              <span className="spinner-border spinner-border-sm me-1"></span>
+            )}
             Confirm
           </button>
         }
