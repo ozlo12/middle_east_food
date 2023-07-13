@@ -8,7 +8,7 @@ export default function Header({ meals }: { meals: MealDoc[] }) {
   return (
     <header>
       <div className="text-center mb-3 position-relative mx-auto">
-        <h1 className={classes.title}>Middle Estern Food</h1>
+        <h1 className={classes.title}>Middle Eastern Food</h1>
         <EmailDropdown />
       </div>
       <Search products={meals.map((m) => ({ title: m.name, id: m.id! }))} />

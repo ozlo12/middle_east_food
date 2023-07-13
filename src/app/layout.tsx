@@ -7,6 +7,7 @@ import { CartProvider } from "@/contexts/cart-context";
 import { ToastProvider } from "@/contexts/useToast";
 import Script from "next/script";
 import { Metadata } from "next";
+import Analytics from "@/components/Analytics";
 
 export const metadata: Metadata = {
   title: "Middle Eastern Food",
@@ -21,25 +22,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script
-          strategy="beforeInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_ANALYTICS_ID}`}
-        />
-        <Script
-          strategy="beforeInteractive"
-          id="google-analytics"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer=window.dataLayer || [];
-              function gtag(){window.dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${process.env.NEXT_PUBLIC_ANALYTICS_ID}', {
-                page_path: window.location.pathname,
-              });
-          `,
-          }}
-        />
-
         <link
           rel="icon"
           type="image/png"
@@ -74,12 +56,26 @@ export default function RootLayout({
         />
       </head>
       <body className={classes.body}>
-        <AuthProvider>
-          <CartProvider>
-            <Navbar />
-            <ToastProvider>{children}</ToastProvider>
-          </CartProvider>
-        </AuthProvider>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_ANALYTICS_ID}`}
+        />
+        <Script id="google-analytics">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+ 
+          gtag('config', '${process.env.NEXT_PUBLIC_ANALYTICS_ID}');
+        `}
+        </Script>
+        <Analytics>
+          <AuthProvider>
+            <CartProvider>
+              <Navbar />
+              <ToastProvider>{children}</ToastProvider>
+            </CartProvider>
+          </AuthProvider>
+        </Analytics>
       </body>
     </html>
   );
