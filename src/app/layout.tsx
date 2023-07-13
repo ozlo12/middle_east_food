@@ -5,11 +5,14 @@ import Navbar from "@/components/navbar/Navbar";
 import { AuthProvider } from "@/contexts/auth-context";
 import { CartProvider } from "@/contexts/cart-context";
 import { ToastProvider } from "@/contexts/useToast";
+import Script from "next/script";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Middle Eastern Food",
   description: "Delicious Syrian food",
 };
+
 export default function RootLayout({
   children,
 }: {
@@ -18,6 +21,25 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <Script
+          strategy="beforeInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_ANALYTICS_ID}`}
+        />
+        <Script
+          strategy="beforeInteractive"
+          id="google-analytics"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer=window.dataLayer || [];
+              function gtag(){window.dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${process.env.NEXT_PUBLIC_ANALYTICS_ID}', {
+                page_path: window.location.pathname,
+              });
+          `,
+          }}
+        />
+
         <link
           rel="icon"
           type="image/png"
