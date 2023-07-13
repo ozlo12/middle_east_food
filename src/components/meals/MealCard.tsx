@@ -13,8 +13,10 @@ export default function MealCard({ meal }: { meal: MealDoc }) {
     <div className={`card w-100 mx-auto`} style={{ maxWidth: "18rem" }}>
       <Image
         src={meal.image}
-        width={250}
-        height={250}
+        width="0"
+        height="0"
+        sizes="200px"
+        style={{ width: "100%", height: "250px" }}
         className="card-img-top"
         alt="..."
       />
