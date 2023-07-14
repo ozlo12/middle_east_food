@@ -2,12 +2,10 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { MealDoc } from "@/models/Meal";
-import { CartButton } from "@/components/buttons/CartButton";
 import CheckIcon from "@/icons/Check";
 import { useCart } from "@/contexts/cart-context";
 
-export default function MealCard({ meal }: { meal: MealDoc }) {
+export default function MealCard({ meal }: { meal: Meal }) {
   const { addToCart } = useCart();
   return (
     <div className={`card w-100 mx-auto`} style={{ maxWidth: "18rem" }}>

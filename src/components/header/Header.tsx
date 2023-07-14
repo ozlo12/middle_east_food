@@ -1,10 +1,8 @@
-import Link from "next/link";
 import classes from "./Header.module.scss";
 import Search from "../search/Search";
-import { MealDoc } from "@/models/Meal";
 import EmailDropdown from "../EmailDropdown";
 
-export default function Header({ meals }: { meals: MealDoc[] }) {
+export default function Header({ meals }: { meals: Meal[] }) {
   return (
     <header>
       <div className="text-center mb-3 position-relative mx-auto">

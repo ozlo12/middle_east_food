@@ -3,7 +3,7 @@ declare interface Meal {
   name: string;
   image: string;
   description: string;
-  gategory: string;
+  category: string;
   price: number;
   createdAt: string;
 }

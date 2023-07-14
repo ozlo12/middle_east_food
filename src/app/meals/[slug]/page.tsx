@@ -1,12 +1,15 @@
 "use client";
 import MealDetails from "@/components/meals/MealDetails";
-import { mealModel } from "@/container/ClientContainer";
-import CheckIcon from "@/icons/Check";
-import { MealDoc } from "@/models/Meal";
-import Image from "next/image";
+import { adminDb } from "@/container/ServerContainer";
+// import { mealModel } from "@/container/ClientContainer";
+// import CheckIcon from "@/icons/Check";
+// import { MealDoc } from "@/models/Meal";
+// import Image from "next/image";
 
-function getMeal(id: string) {
-  return mealModel.findById(id);
+async function getMeal(id: string): Promise<Meal> {
+  const snap = await adminDb.getData("/meals/" + id);
+  const meal: Meal = { ...snap.val(), id };
+  return meal;
 }
 
 export default async function Meal({
@@ -14,6 +17,6 @@ export default async function Meal({
 }: {
   params: { slug: string };
 }) {
-  const meal = await getMeal(slug);
+  // const meal = getMeal(slug)
   return <MealDetails id={slug} />;
 }
