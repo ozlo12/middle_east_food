@@ -1,12 +1,10 @@
-"use client";
 import Link from "next/link";
 import Image from "next/image";
 
 import CheckIcon from "@/icons/Check";
-import { useCart } from "@/contexts/cart-context";
+import AddToCart from "../buttons/AddToCart";
 
 export default function MealCard({ meal }: { meal: Meal }) {
-  const { addToCart } = useCart();
   return (
     <div className={`card w-100 mx-auto`} style={{ maxWidth: "18rem" }}>
       <Image
@@ -36,9 +34,7 @@ export default function MealCard({ meal }: { meal: Meal }) {
           <Link href={`/meals/${meal.id}`} className="btn btn-primary">
             View
           </Link>
-          <button onClick={() => addToCart(meal)} className="btn btn-primary">
-            Add to Cart
-          </button>
+          <AddToCart meal={meal} />
         </div>
       </div>
     </div>
