@@ -79,12 +79,11 @@ export class CartService {
   addToCart(cart: Cart, meal: Meal) {
     const cartItem = this.findItem(cart, meal);
 
-    if (cartItem) {
-      ++cartItem.quantity;
-      cart.totalPrice = +(cart.totalPrice + meal.price).toFixed(2);
-    } else {
-      cart.items.push({ item: meal, quantity: 1 });
-    }
+    if (cartItem) ++cartItem.quantity;
+    else cart.items.push({ item: meal, quantity: 1 });
+
+    cart.totalPrice = +(cart.totalPrice + meal.price).toFixed(2);
+
     return this.updateCart(cart);
   }
 
