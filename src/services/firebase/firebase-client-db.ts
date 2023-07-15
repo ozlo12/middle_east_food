@@ -27,6 +27,7 @@ export class FirebaseClientDB {
   extractKeys(obj: object) {
     return Object.entries(obj).map(([key, val]) => ({ id: key, ...val }));
   }
+
   setData(path: string, data: any) {
     return set(ref(this._db, path), data);
   }

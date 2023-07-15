@@ -1,8 +1,7 @@
 "use client";
 
 import { cartService } from "@/container/ClientContainer";
-import { MealDoc } from "@/models/Meal";
-import { Cart } from "@/models/User";
+// import { Cart } from "@/models/User";
 import {
   createContext,
   ReactNode,
@@ -14,12 +13,12 @@ import { useAuth } from "./auth-context";
 
 const CartContext = createContext<{
   cart?: Cart;
-  removeFromCart: (meal: MealDoc) => Promise<void>;
-  addToCart: (meal: MealDoc) => Promise<void>;
+  removeFromCart: (meal: Meal) => Promise<void>;
+  addToCart: (meal: Meal) => Promise<void>;
   resetCart: () => Promise<void>;
 }>({
-  removeFromCart: async (meal: MealDoc) => {},
-  addToCart: async (meal: MealDoc) => {},
+  removeFromCart: async (meal: Meal) => {},
+  addToCart: async (meal: Meal) => {},
   resetCart: async () => {},
 });
 
@@ -40,19 +39,27 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [auth.user]);
 
   const resetCart = () => {
-    return cartService.updateCart(new Cart());
+    // return cartService.updateCart(new Cart());
+    return cartService.resetCart();
   };
 
-  const addToCart = (meal: MealDoc) => {
-    const updatedCart = new Cart(cart);
-    updatedCart.addItem(meal);
-    return cartService.updateCart(updatedCart);
+  const addToCart = (meal: Meal) => {
+    // const updatedCart = new Cart(cart);
+    const currentCart: Cart = (cart && JSON.parse(JSON.stringify(cart))) || {
+      items: [],
+      totalPrice: 0,
+    };
+    return cartService.addToCart(currentCart, meal);
+    // return cartService.updateCart(updatedCart);
   };
 
-  const removeFromCart = (meal: MealDoc) => {
-    const updatedCart = new Cart(cart);
-    updatedCart.removeItem(meal);
-    return cartService.updateCart(updatedCart);
+  const removeFromCart = (meal: Meal) => {
+    // const updatedCart = new Cart(cart);
+
+    // updatedCart.removeItem(meal);
+    const currentCart = JSON.parse(JSON.stringify(cart!));
+    // return cartService.updateCart(updatedCart);
+    return cartService.removeFromCart(currentCart, meal);
   };
 
   return (

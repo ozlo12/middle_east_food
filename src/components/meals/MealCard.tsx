@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-
 import CheckIcon from "@/icons/Check";
 import AddToCart from "../buttons/AddToCart";
 

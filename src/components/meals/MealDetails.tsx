@@ -2,12 +2,12 @@
 import useSWR, { Fetcher } from "swr";
 import { useCart } from "@/contexts/cart-context";
 import Image from "next/image";
-import { mealModel } from "@/container/ClientContainer";
-import { MealDoc } from "@/models/Meal";
+import { clientDB } from "@/container/ClientContainer";
 import CheckIcon from "@/icons/Check";
 
-const fetcher: Fetcher<MealDoc, string> = (id: string) =>
-  mealModel.findById(id);
+const fetcher: Fetcher<Meal, string> = (id: string) =>
+  clientDB.getData("/meals/" + id).then((e) => e.val());
+// mealModel.findById(id);
 
 export default function MealDetails({ id }: { id: string }) {
   const { addToCart } = useCart();

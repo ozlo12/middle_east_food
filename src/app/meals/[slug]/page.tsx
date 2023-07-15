@@ -17,7 +17,7 @@ export default async function Meal({
 }) {
   const meal = await getMeal(slug);
   return (
-    <div style={{ height: "90vh" }} className="container  overflow-auto">
+    <div style={{ height: "90vh" }} className="container  overflow-auto my-4">
       <div
         style={{ maxWidth: "850px" }}
         className="rounded-3 overflow-hidden mx-auto"
@@ -45,8 +45,9 @@ export default async function Meal({
             </h4>
           </div>
           <h5 className="bg-primary text-white p-2">Description</h5>
-          <p className="p-2">{meal.description}</p>
+          <p className="p-2 text-secondary">{meal.description}</p>
           <div className="text-center pb-4">
+            <div className="my-4 fs-4">£{meal.price}</div>
             <AddToCart meal={meal} />
           </div>
         </div>

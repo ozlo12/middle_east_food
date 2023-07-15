@@ -1,9 +1,9 @@
 import { ModelContract } from "@/contracts/ModelContract";
 import { DataSnapshot } from "firebase/database";
-import { MealDoc } from "./Meal";
+// import { MealDoc } from "./Meal";
 export interface CartItem {
   quanitity: number;
-  item: MealDoc;
+  item: Meal;
 }
 
 export class Cart {
@@ -15,7 +15,7 @@ export class Cart {
     this.totalPrice = cart?.totalPrice || 0;
   }
 
-  addItem(item: MealDoc): void {
+  addItem(item: Meal): void {
     const actualItem = this.items.find((i) => i.item.id === item.id);
 
     if (actualItem) ++actualItem.quanitity;
@@ -30,7 +30,8 @@ export class Cart {
       0
     );
   }
-  removeItem(item: MealDoc) {
+
+  removeItem(item: Meal) {
     const actualItem = this.items.find((i) => i.item.id === item.id);
     if (!actualItem) throw new Error("You try to remove item not exist at all");
 

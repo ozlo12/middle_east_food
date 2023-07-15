@@ -71,7 +71,7 @@ export default function Navbar() {
           <Link passHref className="btn" href="/cart">
             <div className="position-relative">
               <span className="position-absolute badge bg-primary start-100 top-0 rounded-pill translate-middle-y">
-                {cart?.items.reduce((acc, cur) => acc + cur.quanitity, 0) || 0}
+                {cart?.items.reduce((acc, cur) => acc + cur.quantity, 0) || 0}
               </span>
               <CartIcon />
             </div>

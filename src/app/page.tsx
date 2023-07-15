@@ -2,13 +2,13 @@ import Header from "@/components/header/Header";
 import MealCard from "@/components/meals/MealCard";
 import classes from "./layout.module.scss";
 import EnvelopeIcon from "@/icons/Envelope";
-import { adminDb } from "@/container/ServerContainer";
+import { mealServices } from "@/container/ServerContainer";
 
-export const revalidate = 300;
+export const revalidate = 300; // revalidate every hour
 
 async function getMeals(): Promise<Meal[]> {
-  const data = await adminDb.getData("/meals/");
-  return adminDb.extractKeys(data.val());
+  const meals = await mealServices.getAll();
+  return meals;
 }
 
 export default async function HomePage() {

@@ -1,8 +1,12 @@
 import MealEdit from "@/components/meals/MealEdit";
-import { mealModel } from "@/container/ClientContainer";
+import { adminDb } from "@/container/ServerContainer";
 
-function getMeal(id: string) {
-  return mealModel.findById(id);
+export const revalidate = 0;
+async function getMeal(id: string) {
+  // return mealModel.findById(id);
+  const meal = (await adminDb.getData("/meals/" + id)).val() as Meal;
+  if (meal) meal.id = id;
+  return meal;
 }
 export default async function MealItem({
   params: { id },

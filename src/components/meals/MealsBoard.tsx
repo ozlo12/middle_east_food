@@ -2,17 +2,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { MealDoc } from "@/models/Meal";
 import EditIcon from "@/icons/Edit";
-import { mealService } from "@/container/ClientContainer";
+import { clientDB } from "@/container/ClientContainer";
 
 export default function MealsBoard() {
-  const [meals, setMeals] = useState<MealDoc[]>([]);
+  const [meals, setMeals] = useState<Meal[]>([]);
 
   useEffect(() => {
-    const dispose = mealService.watchMeals((meals: MealDoc[]) => {
-      setMeals(meals);
+    const dispose = clientDB.watch("/meals/", (snap) => {
+      setMeals(clientDB.extractKeys(snap.val()));
     });
+
     return dispose;
   }, []);
 
