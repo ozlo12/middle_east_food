@@ -13,6 +13,13 @@ declare interface Cart {
   totalPrice: number;
 }
 
+declare interface ContactUs {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
 declare interface Contact {
   name: string;
   email: string;
@@ -22,17 +29,19 @@ declare interface Contact {
   phone: string;
 }
 
-declare interface Order {
-  id?: string;
-  cart: Cart;
-  createdById: string;
-  createdAt: string;
-  deleverTo: Contact;
-  extraInformation: string;
-}
-
 declare interface User {
   contact: Contact;
   cart: Cart;
   orders: Order[];
+}
+
+declare interface Order {
+  id?: string;
+  cart: Cart;
+  contact: Contact;
+  createdBy: string;
+  createdAt: string;
+  payment: "cash" | "card";
+  extraInformation: string;
+  status: "new" | "completed";
 }

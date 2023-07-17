@@ -11,6 +11,7 @@ import { ContactService } from "@/services/ContactService";
 import { OrderService } from "@/services/OrderService";
 import { MealService } from "@/services/MealService";
 import { FirebaseClientDB } from "@/services/firebase/firebase-client-db";
+import { MailService } from "@/services/MailService";
 const ClientContainer = container.createChildContainer();
 
 ClientContainer.register("EmailAuthProvider", {
@@ -29,6 +30,7 @@ export const firebaseAuth = ClientContainer.resolve(FirebaseAuth);
 // export const mealModel = ClientContainer.resolve(Meal);
 
 // Services
+export const mailService = ClientContainer.resolve(MailService);
 
 export const clientDB = ClientContainer.resolve(FirebaseClientDB);
 export const userService = ClientContainer.resolve(UserService);

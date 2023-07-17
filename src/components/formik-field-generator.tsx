@@ -8,6 +8,34 @@ interface ExtendableProps {
   values: FormikValues;
 }
 
+export const textareaFieldTypeGenerator =
+  (fieldName: string) =>
+  (title: string) =>
+  ({ formik }: { formik: ExtendableProps }) =>
+    (
+      <div style={{ marginBottom: "2rem" }} className="form-floating">
+        <textarea
+          name={fieldName}
+          value={formik.values[fieldName]}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          className={`form-control ${
+            formik.errors[fieldName]
+              ? "is-invalid"
+              : formik.touched[fieldName]
+              ? "is-valid"
+              : ""
+          }`}
+          id={fieldName}
+          placeholder={title}
+        />
+        <label htmlFor={fieldName}>{title}</label>
+        <div className="invalid-feedback position-absolute">
+          {formik.errors[fieldName]}
+        </div>
+      </div>
+    );
+
 export const inputFieldTypeGenerator =
   (fieldType: string = "text") =>
   (fieldName: string) =>

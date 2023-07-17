@@ -19,7 +19,7 @@ export default async function Meal({
   return (
     <div style={{ height: "90vh" }} className="container  overflow-auto my-4">
       <div
-        style={{ maxWidth: "850px" }}
+        style={{ maxWidth: "750px" }}
         className="rounded-3 overflow-hidden mx-auto"
       >
         <Image

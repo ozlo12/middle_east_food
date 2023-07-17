@@ -10,13 +10,23 @@ import {
   NameField,
   PhoneField,
   PostcodeField,
+  textareaFieldTypeGenerator,
 } from "./formik-field-generator";
 import Modal from "./widgets/Modal";
-import { Contact } from "@/models/User";
 import { contactService, orderService } from "@/container/ClientContainer";
 import { useCart } from "@/contexts/cart-context";
 import CheckIcon from "@/icons/Check";
 import { useToast } from "@/contexts/useToast";
+import WalletIcon from "@/icons/Wallet";
+import CreditCardIcon from "@/icons/CreditCard";
+
+interface FormData extends Contact, Pick<Order, "extraInformation"> {
+  cash: boolean;
+  card: boolean;
+}
+
+const ExtraInformation =
+  textareaFieldTypeGenerator("extraInformation")("Extra Information");
 
 export default function ConfirmOrder() {
   const { cart, resetCart } = useCart();
@@ -28,10 +38,16 @@ export default function ConfirmOrder() {
     return contactService.setContact(contact);
   };
 
-  const createOrder = (contact: Contact) => {
+  const createOrder = (formData: FormData) => {
+    const { extraInformation, cash, card, ...contact } = formData;
     if (!cart || cart.items.length < 1)
       throw new Error("No items exist in cart to order");
-    return orderService.createOrder(contact, cart);
+    return orderService.createOrder({
+      cart,
+      contact,
+      extraInformation,
+      payment: cash ? "cash" : "card",
+    });
   };
 
   const formik = useFormik({
@@ -42,13 +58,16 @@ export default function ConfirmOrder() {
       address: "",
       postcode: "",
       city: "",
+      extraInformation: "",
+      cash: true,
+      card: false,
     },
 
-    async onSubmit(values: Contact) {
+    async onSubmit(values: FormData) {
       try {
         setLoading(true);
         await setContact(values);
-        await createOrder(values);
+        if (cart?.items.length) await createOrder(values);
         await resetCart();
         setLoading(false);
         setContext(
@@ -66,7 +85,13 @@ export default function ConfirmOrder() {
 
   useEffect(() => {
     contactService.getContact().then((contact: Contact | null) => {
-      if (contact) formik.setValues(contact);
+      if (contact)
+        formik.setValues({
+          ...contact,
+          extraInformation: "",
+          card: false,
+          cash: true,
+        });
     });
   }, [null]);
 
@@ -101,6 +126,41 @@ export default function ConfirmOrder() {
           <PostcodeField formik={formik} />
           <CityField formik={formik} />
           <PhoneField formik={formik} />
+          <div className="d-flex mb-4 gap-4">
+            <div className="form-check">
+              <input
+                onChange={(...args) => {
+                  formik.setFieldValue("card", false);
+                  formik.handleChange(...args);
+                }}
+                checked={formik.values.cash}
+                className="form-check-input"
+                type="radio"
+                name="cash"
+                id="cash"
+              />
+              <label className="form-check-label" htmlFor="cash">
+                <WalletIcon /> Cash
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                onChange={(...args) => {
+                  formik.setFieldValue("cash", false);
+                  formik.handleChange(...args);
+                }}
+                checked={formik.values.card}
+                type="radio"
+                name="card"
+                id="card"
+              />
+              <label className="form-check-label" htmlFor="card">
+                <CreditCardIcon /> Card
+              </label>
+            </div>
+          </div>
+          <ExtraInformation formik={formik} />
         </form>
         <div className="fw-semibold">
           We Accept <i>Cash</i> and <i>Card</i> on Delivery
