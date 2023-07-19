@@ -119,42 +119,49 @@ export default function ConfirmOrder() {
           <PostcodeField formik={formik} />
           <CityField formik={formik} />
           <PhoneField formik={formik} />
-          <div className="d-flex mb-4 gap-4">
-            <div className="form-check">
-              <input
-                onChange={formik.handleChange}
-                checked={formik.values.payment === "cash"}
-                value="cash"
-                className="form-check-input"
-                type="radio"
-                name="payment"
-                id="cash"
-              />
-              <label className="form-check-label" htmlFor="cash">
-                <WalletIcon /> Cash
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                onChange={formik.handleChange}
-                checked={formik.values.payment === "card"}
-                value="card"
-                type="radio"
-                name="payment"
-                id="card"
-              />
-              <label className="form-check-label" htmlFor="card">
-                <CreditCardIcon /> Card
-              </label>
+          <div className="border p-3 rounded mb-4">
+            <h6 className="secondary text-start mb-3">Payment</h6>
+            <div className="d-flex gap-4 ">
+              <div className="form-check">
+                <input
+                  onChange={formik.handleChange}
+                  checked={formik.values.payment === "cash"}
+                  value="cash"
+                  className="form-check-input"
+                  type="radio"
+                  name="payment"
+                  id="cash"
+                />
+                <label className="form-check-label" htmlFor="cash">
+                  <WalletIcon /> Cash
+                </label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  onChange={formik.handleChange}
+                  checked={formik.values.payment === "card"}
+                  value="card"
+                  type="radio"
+                  name="payment"
+                  id="card"
+                />
+                <label className="form-check-label" htmlFor="card">
+                  <CreditCardIcon /> Card
+                </label>
+              </div>
             </div>
           </div>
           <ExtraInformation formik={formik} />
         </form>
         <div className="fw-semibold">
-          We Accept <i>Cash</i> and <i>Card</i> on Delivery
-          <div className="text-center fw-lighter">
-            Delivery Available and Pickup
+          {/* We Accept <i>Cash</i> and <i>Card</i> on Delivery */}
+          <div className="text-center fw-bold">
+            <p>Delivery Available and Pickup</p>
+            <p className="">
+              Your delicious meal will be prepared and ready for you in around
+              50 minutes!"
+            </p>
           </div>
         </div>
       </Modal>

@@ -66,16 +66,6 @@ export default function Navbar() {
               </Link>
             ))}
           </div>
-        </div>
-        <div className="d-flex mx-3 gap-4">
-          <Link passHref className="btn" href="/cart">
-            <div className="position-relative">
-              <span className="position-absolute badge bg-primary start-100 top-0 rounded-pill translate-middle-y">
-                {cart?.items.reduce((acc, cur) => acc + cur.quantity, 0) || 0}
-              </span>
-              <CartIcon />
-            </div>
-          </Link>
           <AuthGuard
             fallback={
               <Link
@@ -100,6 +90,16 @@ export default function Navbar() {
               </li>
             </AvatarDoopdown>
           </AuthGuard>
+        </div>
+        <div className="d-flex mx-3 gap-4">
+          <Link passHref className="btn" href="/cart">
+            <div className="position-relative">
+              <span className="position-absolute badge bg-primary start-100 top-0 rounded-pill translate-middle-y">
+                {cart?.items.reduce((acc, cur) => acc + cur.quantity, 0) || 0}
+              </span>
+              <CartIcon />
+            </div>
+          </Link>
         </div>
         <button
           onClick={() => setShow(!show)}
