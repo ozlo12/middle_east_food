@@ -15,7 +15,7 @@ import useClickout from "@/hooks/use-clickout";
 const navRoutes = [
   { title: "Home", href: "/" },
   { title: "About Us", href: "/about" },
-  { title: "Contact Us", href: "/contact" },
+  { title: "Contact", href: "/contact" },
 ];
 const AvatarDoopdown = dropdownButtonGenerator(({ onClick }) => (
   <button className="btn" onClick={onClick}>

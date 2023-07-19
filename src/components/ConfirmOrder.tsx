@@ -31,7 +31,6 @@ export default function ConfirmOrder() {
   const { cart, resetCart } = useCart();
   const { setContext } = useToast();
   const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const setContact = (contact: Contact) => {
     return contactService.setContact(contact);
@@ -63,11 +62,9 @@ export default function ConfirmOrder() {
 
     async onSubmit(values: FormData) {
       try {
-        setLoading(true);
         await setContact(values);
         if (cart?.items.length) await createOrder(values);
         await resetCart();
-        setLoading(false);
         setContext(
           <div className="hstack bg-success-subtle p-2 rounded fw-semibold fs-4">
             <CheckIcon className="text-success" />
@@ -104,11 +101,11 @@ export default function ConfirmOrder() {
         show={show}
         action={
           <button
-            disabled={loading}
+            disabled={formik.isSubmitting}
             onClick={submitForm}
             className="btn btn-primary"
           >
-            {loading && (
+            {formik.isSubmitting && (
               <span className="spinner-border spinner-border-sm me-1"></span>
             )}
             Confirm

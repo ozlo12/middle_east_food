@@ -17,6 +17,12 @@ export class MailService {
   }
 
   async contactUsNotification(contactUs: ContactUs) {
-    // Api call to send email.
+    return fetch("/api/email/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(contactUs),
+    }).then((res) => res.json());
   }
 }

@@ -10,7 +10,9 @@ export default function ContactTemplate({
   return (
     <EmailLayout>
       <Title>Contact Request</Title>
+      <br />
       <SideTitle>Contact Details</SideTitle>
+      <br />
       <Card>
         <table style={{ width: "100%" }}>
           {contactKeys.map((k) => (
@@ -21,8 +23,9 @@ export default function ContactTemplate({
           ))}
         </table>
       </Card>
-
+      <br />
       <SideTitle>Message:</SideTitle>
+      <br />
       <Card>
         <p>{contactUs.message}</p>
       </Card>
