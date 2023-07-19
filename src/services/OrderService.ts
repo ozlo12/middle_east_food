@@ -28,16 +28,9 @@ export class OrderService {
     // Add order to Order list.
     await this.db.pushData("/orders/", { fullOrder });
     // Send email with order details.
-    await this.mail.orderNotification(fullOrder);
-    // const res = await fetch(`/api/email`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ contact }),
-    // });
-    // console.log(await res.json());
-
+    const report: { status: "success" | "fail"; message: string } =
+      await this.mail.orderNotification(fullOrder);
+    if (report.status === "fail") console.log(report.message);
     return order;
   }
 

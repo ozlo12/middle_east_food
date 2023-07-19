@@ -1,3 +1,4 @@
+import { mailServerService } from "@/container/ServerContainer";
 import { NextResponse } from "next/server";
 import OrderTemplate from "./OrderTemplate";
 
@@ -8,7 +9,20 @@ async function orderRenderer(order: Order) {
 
 export async function POST(req: Request) {
   const order = await req.json();
-
-  const html = await orderRenderer(order);
-  return NextResponse.json({ html });
+  try {
+    const html = await orderRenderer(order);
+    await mailServerService.sendMail("New Order", html);
+    return NextResponse.json({
+      status: "success",
+      message: "Email sent successfully!",
+    });
+  } catch (err) {
+    return NextResponse.json({
+      status: "fail",
+      message:
+        err instanceof Error
+          ? err.message
+          : "Something went wrong while sending email!",
+    });
+  }
 }

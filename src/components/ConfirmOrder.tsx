@@ -20,10 +20,9 @@ import { useToast } from "@/contexts/useToast";
 import WalletIcon from "@/icons/Wallet";
 import CreditCardIcon from "@/icons/CreditCard";
 
-interface FormData extends Contact, Pick<Order, "extraInformation"> {
-  cash: boolean;
-  card: boolean;
-}
+interface FormData
+  extends Contact,
+    Pick<Order, "extraInformation" | "payment"> {}
 
 const ExtraInformation =
   textareaFieldTypeGenerator("extraInformation")("Extra Information");
@@ -39,14 +38,14 @@ export default function ConfirmOrder() {
   };
 
   const createOrder = (formData: FormData) => {
-    const { extraInformation, cash, card, ...contact } = formData;
+    const { extraInformation, payment, ...contact } = formData;
     if (!cart || cart.items.length < 1)
       throw new Error("No items exist in cart to order");
     return orderService.createOrder({
       cart,
       contact,
       extraInformation,
-      payment: cash ? "cash" : "card",
+      payment,
     });
   };
 
@@ -59,8 +58,7 @@ export default function ConfirmOrder() {
       postcode: "",
       city: "",
       extraInformation: "",
-      cash: true,
-      card: false,
+      payment: "cash",
     },
 
     async onSubmit(values: FormData) {
@@ -89,14 +87,12 @@ export default function ConfirmOrder() {
         formik.setValues({
           ...contact,
           extraInformation: "",
-          card: false,
-          cash: true,
+          payment: "cash",
         });
     });
   }, [null]);
 
   const submitForm = async () => {
-    console.log("button pressed");
     await formik.submitForm();
     setShow(false);
   };
@@ -129,14 +125,12 @@ export default function ConfirmOrder() {
           <div className="d-flex mb-4 gap-4">
             <div className="form-check">
               <input
-                onChange={(...args) => {
-                  formik.setFieldValue("card", false);
-                  formik.handleChange(...args);
-                }}
-                checked={formik.values.cash}
+                onChange={formik.handleChange}
+                checked={formik.values.payment === "cash"}
+                value="cash"
                 className="form-check-input"
                 type="radio"
-                name="cash"
+                name="payment"
                 id="cash"
               />
               <label className="form-check-label" htmlFor="cash">
@@ -146,13 +140,11 @@ export default function ConfirmOrder() {
             <div className="form-check">
               <input
                 className="form-check-input"
-                onChange={(...args) => {
-                  formik.setFieldValue("cash", false);
-                  formik.handleChange(...args);
-                }}
-                checked={formik.values.card}
+                onChange={formik.handleChange}
+                checked={formik.values.payment === "card"}
+                value="card"
                 type="radio"
-                name="card"
+                name="payment"
                 id="card"
               />
               <label className="form-check-label" htmlFor="card">
