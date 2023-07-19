@@ -8,16 +8,16 @@ declare interface Meal {
   createdAt: string;
 }
 
-declare interface Cart {
-  items: { item: Meal; quantity: number }[];
-  totalPrice: number;
-}
-
 declare interface ContactUs {
   name: string;
   email: string;
   phone: string;
   message: string;
+}
+
+declare interface Cart {
+  items: { item: Meal; quantity: number }[];
+  totalPrice: number;
 }
 
 declare interface Contact {

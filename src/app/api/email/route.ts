@@ -1,49 +1,125 @@
 // import { Contact } from "@/models/User";
+
 import { mailServerService } from "@/container/ServerContainer";
 import { NextResponse } from "next/server";
 
-// import nodemailer, { TransportOptions } from "nodemailer";
+const template = `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-// async function sendEamil(contact: Contact) {
-//   return nodemailer
-//     .createTransport({
-//       host: process.env.MAIL_HOST,
-//       port: process.env.MAIL_PORT,
-//       auth: {
-//         user: process.env.MAIL_USER,
-//         pass: process.env.MAIL_PASS,
-//       },
-//     } as TransportOptions)
-//     .sendMail({
-//       subject: "Order",
-//       to: "anasalzaiad@gmail.com",
-//       // to: "mirooguitar44@gmail.com",
-//       from: "zayd@middleeasternfood.co.uk",
-//       html: `
-//       <h1>Order Recived</h1>
-//       <h3>Customer Name: ${contact.name}</h3>
-//       <h3>Customer Phone: ${contact.phone}</h3>
-//       <h3>Customer City: ${contact.city}</h3>
-//       <h3>Customer Address: ${contact.address}</h3>
-//       <h3>Customer Postcode: ${contact.postcode}</h3>
-//       `,
-//     });
-// }
+    <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
 
+    .container {
+      background: rgb(241, 236, 221);
+      border-radius: 5px;
+      padding: 0.5rem;
+    }
+
+    .card {
+      overflow: auto;
+      background: #fff;
+      padding: 0.5rem;
+      margin: 0.5rem;
+      border-radius: 5px;
+    }
+
+    table {
+      width: 100%;
+    }
+
+    th,
+    td {
+      padding: 0.5rem;
+    }
+
+    td {
+    }
+
+    .flex {
+      display: flex;
+    }
+
+    .float-right {
+      float: right;
+    }
+
+    .float-left {
+      float: left;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .text-left {
+      text-align: left;
+    }
+
+    .text-right {
+      text-align: end;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .me {
+      margin: 0 0.5rem 0 0;
+    }
+
+    .ms{
+      margin : 0 0 0 .5rem;
+    }
+    .title {
+      margin-bottom: 1rem;
+      color: rgb(228, 165, 50);
+      text-align: center;
+    }
+
+    .side-title {
+      color: rgb(126, 119, 106);
+      margin-bottom: 1rem;
+      margin-top: 1rem;
+    }
+    .pill {
+      padding: 0.5rem;
+      border-radius: 3rem;
+      color: #fff;
+      font-size: 1rem;
+      background-color: rgb(228, 165, 50);
+    }
+  </style>
+
+  </head>
+  <body>
+    {content}
+  </body>
+</html>
+`;
 export async function POST(req: Request) {
   const { subject, html } = await req.json();
-  const report = await mailServerService.sendMail(subject, html);
-  console.log(report);
-  return NextResponse.json({ message: report });
+  try {
+    const withTemplate = template.replace("{content}", html);
 
-  // try {
-  // const { contact } = await req.json();
-  // const report = await sendEamil(contact);
-  //   return NextResponse.json({ status: "success" }, { status: 201 });
-  // } catch (err) {
-  //   return NextResponse.json({
-  //     status: "fail",
-  //     message: err instanceof Error ? err.message : err,
-  //   });
-  // }
+    await mailServerService.sendMail(subject, withTemplate);
+    return NextResponse.json({
+      status: "success",
+      message: "Email sent successfully",
+    });
+  } catch (err) {
+    console.log(err instanceof Error ? err.message : err);
+    return NextResponse.json({
+      status: "fail",
+      message: "Something went wrong while sending email!",
+    });
+  }
 }

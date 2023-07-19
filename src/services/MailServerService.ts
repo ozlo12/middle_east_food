@@ -20,7 +20,7 @@ export class MailServerService {
   }
 
   async sendMail(subject: string, html: string) {
-    this.transporter.sendMail({
+    return this.transporter.sendMail({
       to: process.env.MAIL_ADMIN,
       subject,
       from: process.env.MAIL_FROM,
