@@ -5,7 +5,6 @@ import { FirebaseEmailAuthProvider } from "@/services/firebase/auth/EmailAuthPro
 import { FirebaseAnonymousAuthProvider } from "@/services/firebase/auth/AnonymousAuthProvider";
 import { AuthService } from "@/services/auth/AuthService";
 import { FirebaseAuth } from "@/services/firebase/auth/Auth";
-import { UserService } from "@/services/UserService";
 import { CartService } from "@/services/CartService";
 import { ContactService } from "@/services/ContactService";
 import { OrderService } from "@/services/OrderService";
@@ -33,7 +32,6 @@ export const firebaseAuth = ClientContainer.resolve(FirebaseAuth);
 export const mailService = ClientContainer.resolve(MailService);
 
 export const clientDB = ClientContainer.resolve(FirebaseClientDB);
-export const userService = ClientContainer.resolve(UserService);
 export const cartService = ClientContainer.resolve(CartService);
 export const contactService = ClientContainer.resolve(ContactService);
 export const orderService = ClientContainer.resolve(OrderService);

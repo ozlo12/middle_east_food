@@ -1,4 +1,3 @@
-import { AnonymousAuthProviderContract } from "@/contracts/AuthProviderContract";
 import { FirebaseClientApp } from "@/services/firebase/firebase-client-app";
 import {
   Auth,
@@ -11,7 +10,7 @@ import { singleton } from "tsyringe";
 
 @singleton()
 export class FirebaseAnonymousAuthProvider
-  implements AnonymousAuthProviderContract<UserCredential>
+  implements AnonymousAuthProvider<UserCredential>
 {
   auth: Auth;
 

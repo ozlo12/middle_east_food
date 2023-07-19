@@ -2,13 +2,10 @@
 
 import useSWR, { Fetcher } from "swr";
 
-const fetcher: Fetcher<OrderContract, string> = (id: string) =>
+const fetcher: Fetcher<Order, string> = (id: string) =>
   orderService.getOrder(id);
 
-import { useState } from "react";
 import { orderService } from "@/container/ClientContainer";
-import { OrderContract } from "@/contracts/OrderContract";
-import Image from "next/image";
 
 export default function OrderDetails({ id }: { id: string }) {
   const { data, isLoading, error } = useSWR(id, fetcher);
@@ -37,11 +34,11 @@ export default function OrderDetails({ id }: { id: string }) {
             </tr>
           </thead>
           <tbody>
-            {data?.order.items.map((item, index) => (
+            {data?.cart.items.map((item, index) => (
               <tr key={index}>
                 <th scope="row">{index + 1}</th>
                 <td>{item.item.name}</td>
-                <td>{item.quanitity}</td>
+                <td>{item.quantity}</td>
                 <td>{item.item.price}</td>
               </tr>
             ))}
@@ -50,7 +47,7 @@ export default function OrderDetails({ id }: { id: string }) {
                 Total:
               </th>
               <th align="center" colSpan={2}>
-                <div className="text-center">{data?.order.totalPrice}</div>
+                <div className="text-center">{data?.cart.totalPrice}</div>
               </th>
             </tr>
           </tbody>

@@ -2,7 +2,6 @@ import { singleton } from "tsyringe";
 import { FirebaseAuth } from "./firebase/auth/Auth";
 import { FirebaseClientDB } from "./firebase/firebase-client-db";
 import { AuthService } from "./auth/AuthService";
-import { Contact } from "@/models/User";
 
 @singleton()
 export class ContactService {

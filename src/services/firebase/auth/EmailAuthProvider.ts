@@ -1,4 +1,3 @@
-import { EmailAuthProviderContract } from "@/contracts/AuthProviderContract";
 import { FirebaseClientApp } from "@/services/firebase/firebase-client-app";
 import {
   Auth,
@@ -12,7 +11,7 @@ import { singleton } from "tsyringe";
 
 @singleton()
 export class FirebaseEmailAuthProvider
-  implements EmailAuthProviderContract<UserCredential>
+  implements EmailAuthProvider<UserCredential>
 {
   private auth: Auth;
   constructor(clientApp: FirebaseClientApp) {

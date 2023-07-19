@@ -1,4 +1,3 @@
-import type { EmailAuthProviderContract } from "@/contracts/AuthProviderContract";
 import { UserCredential } from "firebase/auth";
 import { inject, singleton } from "tsyringe";
 
@@ -6,7 +5,7 @@ import { inject, singleton } from "tsyringe";
 export class EmailPasswordAuthService {
   constructor(
     @inject("EmailAuthProvider")
-    private emailAuthProvider: EmailAuthProviderContract<UserCredential>
+    private emailAuthProvider: EmailAuthProvider<UserCredential>
   ) {}
   signIn(email: string, password: string): Promise<UserCredential> {
     return this.emailAuthProvider.signIn(email, password);

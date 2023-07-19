@@ -45,3 +45,12 @@ declare interface Order {
   extraInformation: string;
   status: "new" | "completed";
 }
+
+declare interface EmailAuthProvider<T = any> {
+  signIn(email: string, password: string): Promise<T>;
+  signUp(email: string, password: string): Promise<T>;
+}
+
+declare interface AnonymousAuthProvider<T = any> {
+  signIn(): Promise<T>;
+}

@@ -1,4 +1,3 @@
-import type { AnonymousAuthProviderContract } from "@/contracts/AuthProviderContract";
 import { UserCredential } from "firebase/auth";
 import { inject, singleton } from "tsyringe";
 
@@ -6,7 +5,7 @@ import { inject, singleton } from "tsyringe";
 export class AnonymousAuthService {
   constructor(
     @inject("AnonymousAuthProvider")
-    private anonymouseAuthProvider: AnonymousAuthProviderContract<UserCredential>
+    private anonymouseAuthProvider: AnonymousAuthProvider<UserCredential>
   ) {}
 
   signIn() {
