@@ -1,11 +1,10 @@
 "use client";
 import { orderService } from "@/container/ClientContainer";
-import { OrderContract } from "@/contracts/OrderContract";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function OrdersBoard() {
-  const [orders, setOrders] = useState<OrderContract[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [menu, setMenu] = useState<"new" | "completed">("new");
 
   useEffect(() => {

@@ -10,7 +10,10 @@
   width: 0px;
   height: 0px;
 }
-
+.form-check-input:checked {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+} 
 // /* Background color of the scrollbar track */
 // ::-webkit-scrollbar-track {
 //   background-color: var(--bs-primary-bg-subtle);

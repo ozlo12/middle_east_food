@@ -1,18 +1,18 @@
 import Header from "@/components/header/Header";
 import MealCard from "@/components/meals/MealCard";
-import { mealModel } from "@/container/ClientContainer";
-import { MealDoc } from "@/models/Meal";
 import classes from "./layout.module.scss";
 import EnvelopeIcon from "@/icons/Envelope";
+import { mealServices } from "@/container/ServerContainer";
 
-export const revalidate = 60;
+export const revalidate = 300; // revalidate every hour
 
-async function getMeals(): Promise<MealDoc[]> {
-  return await mealModel.getAll();
+async function getMeals(): Promise<Meal[]> {
+  const meals = await mealServices.getAll();
+  return meals;
 }
+
 export default async function HomePage() {
   const meals = await getMeals();
-
   return (
     <div className={`container vh-100 overflow-auto ${classes.meals}`}>
       <Header meals={meals} />

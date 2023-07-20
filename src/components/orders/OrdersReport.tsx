@@ -1,6 +1,5 @@
 "use client";
 import { orderService } from "@/container/ClientContainer";
-import { OrderContract } from "@/contracts/OrderContract";
 import { useEffect, useState } from "react";
 
 export default function OrdersReport() {

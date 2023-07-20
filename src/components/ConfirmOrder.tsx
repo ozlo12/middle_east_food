@@ -10,28 +10,42 @@ import {
   NameField,
   PhoneField,
   PostcodeField,
+  textareaFieldTypeGenerator,
 } from "./formik-field-generator";
 import Modal from "./widgets/Modal";
-import { Contact } from "@/models/User";
 import { contactService, orderService } from "@/container/ClientContainer";
 import { useCart } from "@/contexts/cart-context";
 import CheckIcon from "@/icons/Check";
 import { useToast } from "@/contexts/useToast";
+import WalletIcon from "@/icons/Wallet";
+import CreditCardIcon from "@/icons/CreditCard";
+
+interface FormData
+  extends Contact,
+    Pick<Order, "extraInformation" | "payment"> {}
+
+const ExtraInformation =
+  textareaFieldTypeGenerator("extraInformation")("Extra Information");
 
 export default function ConfirmOrder() {
   const { cart, resetCart } = useCart();
   const { setContext } = useToast();
   const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const setContact = (contact: Contact) => {
     return contactService.setContact(contact);
   };
 
-  const createOrder = (contact: Contact) => {
+  const createOrder = (formData: FormData) => {
+    const { extraInformation, payment, ...contact } = formData;
     if (!cart || cart.items.length < 1)
       throw new Error("No items exist in cart to order");
-    return orderService.createOrder(contact, cart);
+    return orderService.createOrder({
+      cart,
+      contact,
+      extraInformation,
+      payment,
+    });
   };
 
   const formik = useFormik({
@@ -42,15 +56,15 @@ export default function ConfirmOrder() {
       address: "",
       postcode: "",
       city: "",
+      extraInformation: "",
+      payment: "cash",
     },
 
-    async onSubmit(values: Contact) {
+    async onSubmit(values: FormData) {
       try {
-        setLoading(true);
         await setContact(values);
-        await createOrder(values);
+        if (cart?.items.length) await createOrder(values);
         await resetCart();
-        setLoading(false);
         setContext(
           <div className="hstack bg-success-subtle p-2 rounded fw-semibold fs-4">
             <CheckIcon className="text-success" />
@@ -66,12 +80,16 @@ export default function ConfirmOrder() {
 
   useEffect(() => {
     contactService.getContact().then((contact: Contact | null) => {
-      if (contact) formik.setValues(contact);
+      if (contact)
+        formik.setValues({
+          ...contact,
+          extraInformation: "",
+          payment: "cash",
+        });
     });
   }, [null]);
 
   const submitForm = async () => {
-    console.log("button pressed");
     await formik.submitForm();
     setShow(false);
   };
@@ -83,11 +101,11 @@ export default function ConfirmOrder() {
         show={show}
         action={
           <button
-            disabled={loading}
+            disabled={formik.isSubmitting}
             onClick={submitForm}
             className="btn btn-primary"
           >
-            {loading && (
+            {formik.isSubmitting && (
               <span className="spinner-border spinner-border-sm me-1"></span>
             )}
             Confirm
@@ -101,11 +119,49 @@ export default function ConfirmOrder() {
           <PostcodeField formik={formik} />
           <CityField formik={formik} />
           <PhoneField formik={formik} />
+          <div className="border p-3 rounded mb-4">
+            <h6 className="secondary text-start mb-3">Payment</h6>
+            <div className="d-flex gap-4 ">
+              <div className="form-check">
+                <input
+                  onChange={formik.handleChange}
+                  checked={formik.values.payment === "cash"}
+                  value="cash"
+                  className="form-check-input"
+                  type="radio"
+                  name="payment"
+                  id="cash"
+                />
+                <label className="form-check-label" htmlFor="cash">
+                  <WalletIcon /> Cash
+                </label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  onChange={formik.handleChange}
+                  checked={formik.values.payment === "card"}
+                  value="card"
+                  type="radio"
+                  name="payment"
+                  id="card"
+                />
+                <label className="form-check-label" htmlFor="card">
+                  <CreditCardIcon /> Card
+                </label>
+              </div>
+            </div>
+          </div>
+          <ExtraInformation formik={formik} />
         </form>
         <div className="fw-semibold">
-          We Accept <i>Cash</i> and <i>Card</i> on Delivery
-          <div className="text-center fw-lighter">
-            Delivery Available and Pickup
+          {/* We Accept <i>Cash</i> and <i>Card</i> on Delivery */}
+          <div className="text-center fw-bold">
+            <p>Delivery Available and Pickup</p>
+            <p className="">
+              Your delicious meal will be prepared and ready for you in around
+              50 minutes!"
+            </p>
           </div>
         </div>
       </Modal>

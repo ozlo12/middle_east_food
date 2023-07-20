@@ -1,6 +1,6 @@
 "use client";
 
-import { MealDoc } from "@/models/Meal";
+// import { MealDoc } from "@/models/Meal";
 import { useFormik } from "formik";
 import MealCard from "./MealCard";
 import {
@@ -9,7 +9,7 @@ import {
   textNameGenerator,
 } from "../formik-field-generator";
 import Link from "next/link";
-import { mealModel } from "@/container/ClientContainer";
+import { clientDB /*mealModel*/ } from "@/container/ClientContainer";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Modal from "../widgets/Modal";
@@ -19,7 +19,7 @@ const CategoriesField = textNameGenerator("category")("Category");
 const ImageField = textNameGenerator("image")("Image");
 const PriceField = inputFieldTypeGenerator("number")("price")("Price");
 
-export default function MealEdit({ meal }: { meal?: MealDoc }) {
+export default function MealEdit({ meal }: { meal?: Meal }) {
   const [showModal, setShowModal] = useState(false);
 
   const router = useRouter();
@@ -36,12 +36,18 @@ export default function MealEdit({ meal }: { meal?: MealDoc }) {
     // Save/Overwrite meal.
     async onSubmit(values) {
       try {
-        if (meal) await mealModel.updateById(meal.id!, values);
+        // if (meal) await mealModel.updateById(meal.id!, values);
+        if (meal) await clientDB.updateData("/meals/" + meal.id, values);
+        // await mealModel.create({
+        //   ...values,
+        //   createdAt: new Date().toISOString(),
+        // });
         else
-          await mealModel.create({
+          await clientDB.pushData("/meals/", {
             ...values,
             createdAt: new Date().toISOString(),
           });
+
         router.back();
       } catch (err) {
         if (err instanceof Error) console.log(err.message);
@@ -50,9 +56,10 @@ export default function MealEdit({ meal }: { meal?: MealDoc }) {
     },
   });
 
-  const onDelete = () => {
+  const onDelete = async () => {
     if (meal && meal.id) {
-      mealModel.deleteById(meal.id);
+      // mealModel.deleteById(meal.id);
+      await clientDB.deleteData("/meals/" + meal.id);
       router.back();
     }
   };

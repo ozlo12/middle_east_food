@@ -1,53 +1,52 @@
 import { singleton } from "tsyringe";
 import { FirebaseClientDB } from "./firebase/firebase-client-db";
-import { Cart, Contact } from "@/models/User";
 import { FirebaseAuth } from "./firebase/auth/Auth";
-
-import { OrderContract } from "@/contracts/OrderContract";
+import { MailService } from "./MailService";
 
 @singleton()
 export class OrderService {
-  constructor(private db: FirebaseClientDB, private auth: FirebaseAuth) {}
+  constructor(
+    private db: FirebaseClientDB,
+    private auth: FirebaseAuth,
+    private mail: MailService
+  ) {}
 
-  async createOrder(contact: Contact, cart: Cart) {
+  async createOrder(
+    order: Pick<Order, "cart" | "contact" | "extraInformation" | "payment">
+  ) {
     if (!this.auth.user) throw new Error("No signed in user to take an order");
-    const { uid } = this.auth.user;
-    // Add order to user
-    await this.db.pushData(`users/${uid}/orders`, cart);
-    // Add order to Order list
-    const order = await this.db.pushData("/orders/", {
-      order: cart,
-      createdBy: uid,
-      contact,
-      status: "new",
-      createdAt: new Date().toISOString(),
-    });
+    const createdAt = new Date(Date.now()).toISOString();
+    const createdBy = this.auth.user.uid;
 
-    const res = await fetch(`/api/email`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ contact }),
-    });
-    console.log(await res.json());
+    const fullOrder: Order = { ...order, createdAt, createdBy, status: "new" };
 
+    // Add order to user.
+    await this.db.pushData(`users/${createdBy}/orders`, {
+      ...order,
+      createdAt,
+    });
+    // Add order to Order list.
+    await this.db.pushData("/orders/", fullOrder);
+    // Send email with order details.
+    const report: { status: "success" | "fail"; message: string } =
+      await this.mail.orderNotification(fullOrder);
+    if (report.status === "fail") console.log(report.message);
     return order;
   }
 
-  async getOrder(id: string): Promise<OrderContract> {
+  async getOrder(id: string): Promise<Order> {
     const order = await this.db.getData("/orders/" + id);
     return { id: order.key, ...order.val() };
   }
 
-  watchOrders(fn: (orders: OrderContract[]) => void) {
+  watchOrders(fn: (orders: Order[]) => void) {
     return this.db.watch("/orders/", (snap) => {
       if (!snap.exists()) return fn([]);
       fn(this.db.extractKeys(snap.val()));
     });
   }
 
-  toggleOrder(id: string, status: OrderContract["status"]) {
+  toggleOrder(id: string, status: Order["status"]) {
     return this.db.updateData("/orders/" + id, { status });
   }
 }

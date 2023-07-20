@@ -28,7 +28,7 @@ export default function CartPage() {
                 </tr>
               </thead>
               <tbody>
-                {cart?.items.map(({ item, quanitity }, index) => (
+                {cart?.items.map(({ item, quantity }, index) => (
                   <tr key={index}>
                     <th scope="row">{index + 1}</th>
                     <td valign="middle">
@@ -48,7 +48,7 @@ export default function CartPage() {
                       £{item.price}
                     </td>
                     <td align="center" valign="middle">
-                      {quanitity}
+                      {quantity}
                     </td>
                     <td>
                       <div className="vstack gap-2">

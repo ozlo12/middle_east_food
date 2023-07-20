@@ -25,7 +25,7 @@ export const dropdownButtonGenerator =
       return document.removeEventListener("click", clickoutHandler);
     }, []);
     return (
-      <div dir="rtl" ref={ref} className="dropdown ">
+      <div dir="rtl w-fit" ref={ref} className="dropdown ">
         <Button
           onClick={() => {
             setShow((cur) => !cur);
