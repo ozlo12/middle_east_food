@@ -26,7 +26,7 @@ export default async function HomePage() {
           </div>
         ))}
       </div>
-      <div className="m-2 hstack gap-2 justify-content-center align-items-center">
+      {/* <div className="m-2 hstack gap-2 justify-content-center align-items-center">
         <EnvelopeIcon className="text-white" />
         <a
           className="link text-white  fw-semibold"
@@ -34,7 +34,7 @@ export default async function HomePage() {
         >
           zayd@midddleeasternfood.co.uk
         </a>
-      </div>
+      </div> */}
     </div>
   );
 }
