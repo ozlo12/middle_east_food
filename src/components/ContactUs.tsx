@@ -10,6 +10,7 @@ import {
   PhoneField,
   textareaFieldTypeGenerator,
 } from "./formik-field-generator";
+import EnvelopeIcon from "@/icons/Envelope";
 
 const MessageField = textareaFieldTypeGenerator("message")("Message");
 
