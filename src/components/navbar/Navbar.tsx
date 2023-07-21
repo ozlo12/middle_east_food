@@ -77,7 +77,8 @@ export default function Navbar() {
               </Link>
             }
           >
-            <AvatarDoopdown>
+            <button className="btn text-white p-0" onClick={signOut}>Logout</button>
+            {/* <AvatarDoopdown>
               <li className="">
                 <Link href="/profile" className="dropdown-item">
                   Profile
@@ -88,7 +89,7 @@ export default function Navbar() {
                   Logout
                 </button>
               </li>
-            </AvatarDoopdown>
+            </AvatarDoopdown> */}
           </AuthGuard>
         </div>
         <div className="d-flex mx-3 gap-4">
