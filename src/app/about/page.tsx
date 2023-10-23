@@ -6,8 +6,10 @@ export default function AboutUs() {
     <div className="text-light container">
       <h1 className="text-center m-3">About Us</h1>
 
-      <h3 className="text-primary-emphasis">Welcome</h3>
-      <p>
+      <h3 className="text-primary-emphasis">Welcome to our online shop</h3>
+
+      {/*<p>
+  
         Welcome to our vegetarian shop that serves the most delicious, fresh and
         healthy vegetarian food. We care about providing diverse and delicious
         vegan options for all tastes, and we believe that a vegan diet can be
@@ -30,6 +32,20 @@ export default function AboutUs() {
       <p className="fst-italic">
         If you are looking for a fun and delicious vegan food experience,
         welcome to our vegan shop!
+  </p>*/}
+      <p>
+        Welcome to our vegan shop that serves the most delicious, fresh and
+        healthy vegan food. We care about providing diverse and delicious vegan
+        options for all tastes, and we believe that a vegan diet can be full of
+        flavor and variety. Our online shop features organic and fresh
+        ingredients that come from trusted sources, and we offer healthy,
+        delicious meals at reasonable prices. Our menu is varied and full of
+        delicious vegan options, including main dishes, salads, soups We believe
+        that a vegan diet is the best option for your health and the health of
+        the environment, and we take pride in providing a high quality service
+        to all of our visitors. We strive to meet your dietary needs and provide
+        delicious and nutritious options. If you are looking for a fun and
+        delicious vegan food experience, welcome to our vegan shop!
       </p>
     </div>
   );
