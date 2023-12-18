@@ -2,14 +2,13 @@
 import { orderService } from "@/container/ClientContainer";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
 export default function OrdersBoard() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [menu, setMenu] = useState<"new" | "completed">("new");
 
   useEffect(() => {
     const dispose = orderService.watchOrders((orders) => {
-      setOrders(orders);
+      if (orders?.length) setOrders(orders);
     });
     return dispose;
   }, []);
@@ -40,10 +39,19 @@ export default function OrdersBoard() {
       <ul style={{ maxHeight: "75vh" }} className="list-group overflow-auto">
         {orders
           .filter((o) => o.status === menu)
+          .sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
           .map((o, i) => (
             <li key={i} className="list-group-item">
               <div className="d-flex justify-content-between">
-                <Link href={"/admin/orders/" + o.id}>{o.createdAt}</Link>
+                <Link href={"/admin/orders/" + o.id}>
+                  <div className="row">
+                    <div className="col">{o?.contact?.name || "any"}</div>
+                    <div className="col">{o.createdAt}</div>
+                  </div>
+                </Link>
                 <div className="form-check">
                   <input
                     onChange={(e) => {
